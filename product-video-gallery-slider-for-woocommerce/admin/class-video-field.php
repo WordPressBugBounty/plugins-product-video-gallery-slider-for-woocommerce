@@ -167,7 +167,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_VIDEO_FIELD' ) ) {
 							video_aria.find('select[name^="nickx_product_video_type["]').val('nickx_video_url_youtube').change();
 						} else if (video_url.indexOf("vimeo") > 0) {
 							video_aria.find('select[name^="nickx_product_video_type["]').val('nickx_video_url_vimeo').change();
-						} else if (video_url.indexOf(window.location.hostname) > 0) {
+						} else if (video_url.indexOf(window.location.hostname) > 0 || video_url.indexOf("mp4") > 0 ) {
 							video_aria.find('select[name^="nickx_product_video_type["]').val('nickx_video_url_local').change();
 						} else {
 							video_aria.find('select[name^="nickx_product_video_type["]').val('nickx_video_url_iframe').change();

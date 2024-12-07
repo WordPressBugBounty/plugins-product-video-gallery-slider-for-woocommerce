@@ -4,11 +4,11 @@ Plugin Name: Product Video Gallery for Woocommerce
 Description: Adding Product YouTube Video and Instantly transform the gallery on your WooCommerce Product page into a fully Responsive Stunning Carousel Slider.
 Author: NikHiL Gadhiya
 Author URI: https://www.technosoftwebs.com
-Date: 17/07/2024
-Version: 1.4.2.8
+Date: 07/12/2024
+Version: 1.4.2.9
 Text Domain: product-video-gallery-slider-for-woocommerce
 WC requires at least: 2.3
-WC tested up to: 9.1.2
+WC tested up to: 9.4.3
 
 @package WC_PRODUCT_VIDEO_GALLERY
 -------------------------------------------------*/
@@ -23,7 +23,7 @@ if ( ! defined( 'NICKX_PLUGIN_BASE' ) ) {
     define( 'NICKX_PLUGIN_BASE', plugin_basename( __FILE__ ) );
 }
 if ( ! defined( 'NICKX_PLUGIN_VERSION' ) ) {
-    define( 'NICKX_PLUGIN_VERSION', '1.4.2.8' );
+    define( 'NICKX_PLUGIN_VERSION', '1.4.2.9' );
 }
 require_once __DIR__ . '/admin/js/nickx_live.php';
 
@@ -59,6 +59,7 @@ function nickx_activation_hook_callback() {
 			'nickx_thumbnails_to_show' => 4,
 			'nickx_arrowcolor' => '#000',
 			'nickx_arrowbgcolor' => '#FFF',
+			'nickx_thumnails_layout' => 'slider',
 		);
 		foreach ( $nickx_set_settings as $nickx_key => $nickx_set_setting ) {
 			update_option( $nickx_key , $nickx_set_setting );
@@ -88,12 +89,9 @@ function nickx_remove_woo_hooks() {
 	if ( ( is_multisite() && is_plugin_active_for_network( 'woocommerce/woocommerce.php' ) ) || is_plugin_active( 'woocommerce/woocommerce.php' ) ) {
 		if( !is_admin() ){
 			$nickx_rendering_obj = new WC_PRODUCT_VIDEO_GALLERY_RENDERING();
-			remove_action( 'woocommerce_before_single_product_summary_product_images', 'woocommerce_show_product_thumbnails', 20 );
-			remove_action( 'woocommerce_product_thumbnails', 'woocommerce_show_product_thumbnails', 20 );
-			if ( get_option( 'nickx_hide_thumbnails' ) != 'yes' ) {
-				add_action( 'woocommerce_product_thumbnails', array( $nickx_rendering_obj, 'nickx_show_product_thumbnails' ), 20 );
-			}
 			if ( get_option( 'nickx_gallery_action' ) != 'yes' ) {
+				remove_action( 'woocommerce_before_single_product_summary_product_images', 'woocommerce_show_product_thumbnails', 20 );
+				remove_action( 'woocommerce_product_thumbnails', 'woocommerce_show_product_thumbnails', 20 );
 				remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 10 );
 				remove_action( 'woocommerce_before_single_product_summary', 'woocommerce_show_product_images', 20 );
 				add_action( 'woocommerce_before_single_product_summary', array( $nickx_rendering_obj, 'nickx_show_product_image' ), 10 );

@@ -91,7 +91,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 											<label for="nickx_slider_layout">Slider Layout </label>
 										</th>
 										<td class="forminp forminp-select">
-											<select name="nickx_slider_layout" id="nickx_slider_layout" style="">
+											<select name="nickx_slider_layout" id="nickx_slider_layout">
 												<option value="horizontal" ' . selected( 'horizontal', get_option( 'nickx_slider_layout' ), false ) . '>Horizontal</option>
 												<option value="left" ' . selected( 'left', get_option( 'nickx_slider_layout' ), false ) . '>Vertical Left</option>
 												<option value="right" ' . selected( 'right', get_option( 'nickx_slider_layout' ), false ) . '>Vertical Right</option>
@@ -159,7 +159,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 									<tr valign="top">
 										<th scope="row" class="titledesc"><label for="nickx_show_zoom">Zoom style</label></th>
 										<td class="forminp forminp-checkbox">
-											<select name="nickx_show_zoom" id="nickx_show_zoom" style="">
+											<select name="nickx_show_zoom" id="nickx_show_zoom">
 												<option value="window" ' . selected( 'window', get_option( 'nickx_show_zoom' ), false ) . '>Window Right side</option>
 												<option value="yes" ' . selected( 'yes', get_option( 'nickx_show_zoom' ), false ) . '>Inner</option>
 												<option value="lens" ' . selected( 'lens', get_option( 'nickx_show_zoom' ), false ) . '>Lens</option>
@@ -253,10 +253,19 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 									<tr valign="top" ' . ( ( $lic_chk_stateus ) ? '' : 'class="primium_aria" title="AVAILABLE IN PREMIUM VERSION"' ) . '">
 										<th scope="row" class="titledesc"><label for="nickx_place_of_the_video">Place Of The Video</label></th>
 										<td class="forminp forminp-checkbox">
-											<select name="nickx_place_of_the_video" id="nickx_place_of_the_video" style="">
+											<select name="nickx_place_of_the_video" id="nickx_place_of_the_video">
 												<option value="no" ' . selected( 'no', get_option( 'nickx_place_of_the_video' ), false ) . '>After Product Gallery Images</option>
 												<option value="second" ' . selected( 'second', get_option( 'nickx_place_of_the_video' ), false ) . '>After Product Image</option>
 												<option value="yes" ' . selected( 'yes', get_option( 'nickx_place_of_the_video' ), false ) . '>Before Product Gallery Images</option>
+											</select>
+										</td>
+									</tr>
+									<tr valign="top" ' . ( ( $lic_chk_stateus ) ? '' : 'class="primium_aria" title="AVAILABLE IN PREMIUM VERSION"' ) . '">
+										<th scope="row" class="titledesc"><label for="nickx_thumnails_layout">Thumbnails Layout</label></th>
+										<td class="forminp forminp-checkbox">
+											<select name="nickx_thumnails_layout" id="nickx_thumnails_layout">
+												<option value="slider" ' . selected( 'slider', get_option( 'nickx_thumnails_layout', 'grid' ), false ) . '>Slider</option>
+												<option value="grid" ' . selected( 'grid', get_option( 'nickx_thumnails_layout' ), false ) . '>Grid</option>
 											</select>
 										</td>
 									</tr>
@@ -415,6 +424,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 				register_setting( 'wc_product_video_gallery_options', 'nickx_vid_autoplay' );
 				register_setting( 'wc_product_video_gallery_options', 'nickx_controls' );
 				register_setting( 'wc_product_video_gallery_options', 'nickx_place_of_the_video' );
+				register_setting( 'wc_product_video_gallery_options', 'nickx_thumnails_layout' );
 			}
 		}
 		public function wc_prd_vid_slider_settings_link( $links ) {

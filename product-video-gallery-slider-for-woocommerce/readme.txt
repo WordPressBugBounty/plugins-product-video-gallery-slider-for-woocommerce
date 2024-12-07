@@ -1,12 +1,12 @@
 ﻿=== Product Video Gallery for Woocommerce ===
 Contributors: nikhilgadhiya
 Donate link: https://www.paypal.com/paypalme/NikhilGadhiya
-Tags: product-video,woocommerce-product,video-slider,youtube,woocommerce,wc,ecommerce,products,product-slider,woocommerce-product-slider,woocommerce-carousel,woocommerce-product-gallery,woocommerce-product-gallery-slider,woocommerce-product-image-slider,product-gallery-slider,product-gallery
+Tags: product-video,woocommerce-product,video-slider,youtube,woocommerce
 Requires at least: 5.2.4
-Tested up to: 6.6
+Tested up to: 6.7.1
 Requires PHP: 5.2.4
-Stable tag: 1.4.2.8
-Date: 17/07/2024
+Stable tag: 1.4.2.9
+Date: 07/12/2024
 License: GPLv3 or later License
 URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -37,7 +37,8 @@ Product details page will show that gallery video.
 04. Video Looping (Looping a video is allowing the video to play in a repeat mode).
 05. Video Autoplay.
 06. Show Only Videos (Display only videos on gallery).
-07. Shortcode **[product_gallery_shortcode]** (Use shortcode if your product pages edited with help of any page builders **Divi Builder, Elementor Builder etc.**).
+07. Grid layout for thumbnails.
+08. Shortcode **[product_gallery_shortcode]** (Use shortcode if your product pages edited with help of any page builders **Divi Builder, Elementor Builder etc.**).
 [Buy Premium](https://www.technosoftwebs.com/wc-product-video-gallery/) 
 Before buying the paid plugin please make sure free version of our plugin works great. So you have an idea about the features of plugins and how it will works.
 
@@ -82,6 +83,11 @@ For adding a video to your product : open edit product page and insert your prod
 
 
 == Changelog ==
+
+= 1.4.2.9 =
+* Fix JavaScript errors and load vimeo script defer.
+* Address bug fixes.
+* Test compatibility with the latest version.
 
 = 1.4.2.8 =
 * Provide support for the Dokan plugin.
