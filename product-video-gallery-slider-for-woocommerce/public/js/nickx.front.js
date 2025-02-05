@@ -111,7 +111,7 @@ function nickx_variations_image_reset() {
 	}
 }
 nquery(document).ready(function() {
-	nquery('span.nickx-popup_trigger.fa.fa-expand').click(function(e){
+	nquery('span.nickx-popup_trigger').click(function(e){
 	    nquery('.nslick-current.nslick-active span.nickx-popup').click();
 	});
 	nquery('.product_video_iframe').each(function(index, elem){
@@ -443,7 +443,7 @@ nquery(document).ready(function() {
 			} else {
 				nickx_variations_image_reset();
 			}
-			if ( ( slide_count > 1 || wc_prd_vid_slider_setting.nickx_hide_thumbnail != 'yes' ) && variation.image.full_src != nquery('.zoom.nslick-slide:not(.nslick-cloned) .wp-post-image').attr('data-o_zoom-image')) {
+			if ( slide_count > 1 && variation.image.full_src != nquery('.zoom.nslick-slide:not(.nslick-cloned) .wp-post-image').attr('data-o_zoom-image')) {
 				nquery('.nickx-slider-for').nslick('nslickGoTo', post_thumb_index);
 			}
 			if(wc_prd_vid_slider_setting.nickx_show_zoom != 'off') {
@@ -486,13 +486,14 @@ function setIframeHeight(){
 	});
 }
 function set_nickx_popup_trigger(){
-	if(nquery('span.nickx-popup_trigger.fa.fa-expand').length > 0){
+	if(nquery('span.nickx-popup_trigger').length > 0){
+		nquery('span.nickx-popup_trigger').css({'opacity':'0'});
 		setTimeout(function(e){
 			let current_link = nquery('.show_lightbox .nslick-current.nslick-active span.nickx-popup');
 			let offset = current_link.offset();
 			if( current_link && offset ){
 				current_link.css({'opacity':'0'});
-				nquery('span.nickx-popup_trigger.fa.fa-expand').offset({ top: offset.top, left: offset.left});
+				nquery('span.nickx-popup_trigger').offset({ top: offset.top, left: offset.left}).css({'opacity':''});
 			}
 		},10);
 	}

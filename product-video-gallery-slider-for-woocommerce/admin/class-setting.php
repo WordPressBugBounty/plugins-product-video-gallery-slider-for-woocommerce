@@ -194,6 +194,13 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 										</td>
 									</tr>
 									<tr valign="top">
+										<th scope="row" class="titledesc"><label for="nickx_thumbnails_hook">Enable Thumbnails Hook</label></th>
+										<td class="forminp forminp-checkbox">
+											<input name="nickx_thumbnails_hook" id="nickx_thumbnails_hook" type="checkbox" value="yes" ' . checked( 'yes', get_option( 'nickx_thumbnails_hook', 'no' ), false ) . '>
+											<samll class="lbl_tc"><code>woocommerce_product_thumbnails</code> This hook is used to inject custom code, such as adding a badge to the product gallery.</samll>
+										</td>
+									</tr>
+									<tr valign="top">
 										<th scope="row" class="titledesc"><label for="nickx_hide_thumbnails">Hide Thumbnails</label></th>
 										<td class="forminp forminp-checkbox">
 											<input name="nickx_hide_thumbnails" id="nickx_hide_thumbnails" type="checkbox" value="yes" ' . checked( 'yes', get_option( 'nickx_hide_thumbnails' ), false ) . '>
@@ -279,6 +286,13 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 										<th scope="row" class="titledesc"><label for="nickx_arrowbgcolor">Arrow Background Color</label></th>
 										<td class="forminp forminp-color">
 											<input name="nickx_arrowbgcolor" id="nickx_arrowbgcolor" type="text" value="' . esc_attr( get_option( 'nickx_arrowbgcolor' ) ) . '" class="colorpick">
+										</td>
+									</tr>
+									<tr valign="top">
+										<th scope="row" class="titledesc"><label for="nickx_video_icon_color">Video Icon Color</label></th>
+										<td class="forminp forminp-color">
+											<input name="nickx_video_icon_color" id="nickx_video_icon_color" type="text" value="' . esc_attr( get_option( 'nickx_video_icon_color' ) ) . '" class="colorpick">
+											<samll>To set the color of the video icon on the video thumbnail.</samll>
 										</td>
 									</tr>
 									<tr valign="top" ' . ( ( $lic_chk_stateus ) ? '' : 'class="primium_aria" title="AVAILABLE IN PREMIUM VERSION"' ) . '">
@@ -415,9 +429,11 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 			register_setting( 'wc_product_video_gallery_options', 'nickx_hide_thumbnails' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_hide_thumbnail' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_gallery_action' );
+			register_setting( 'wc_product_video_gallery_options', 'nickx_thumbnails_hook' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_template' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_thumbnails_to_show' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_arrowbgcolor' );
+			register_setting( 'wc_product_video_gallery_options', 'nickx_video_icon_color' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_adaptive_height' );
 			if ( $this->extend->is_nickx_act_lic() ) {
 				register_setting( 'wc_product_video_gallery_options', 'nickx_videoloop' );

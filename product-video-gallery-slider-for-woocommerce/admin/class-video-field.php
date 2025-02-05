@@ -167,7 +167,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_VIDEO_FIELD' ) ) {
 							video_aria.find('select[name^="nickx_product_video_type["]').val('nickx_video_url_youtube').change();
 						} else if (video_url.indexOf("vimeo") > 0) {
 							video_aria.find('select[name^="nickx_product_video_type["]').val('nickx_video_url_vimeo').change();
-						} else if (video_url.indexOf(window.location.hostname) > 0 || video_url.indexOf("mp4") > 0 ) {
+						} else if (video_url.indexOf(window.location.hostname) > 0 || video_url.indexOf("mp4") > 0) {
 							video_aria.find('select[name^="nickx_product_video_type["]').val('nickx_video_url_local').change();
 						} else {
 							video_aria.find('select[name^="nickx_product_video_type["]').val('nickx_video_url_iframe').change();
@@ -271,7 +271,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_VIDEO_FIELD' ) ) {
 					</li>
 				</ul><input type="hidden" value="' . esc_attr( $product_video_thumb_id ) . '" name="product_video_thumb_url[]" class="product_video_thumb_url">
 				</div>
-				<div style="display: inline-block;"><button type="button" class="button add_video" disabled><b><span class="dashicons dashicons-insert" style="vertical-align: middle;"></span></b> Add More Videos ' . wc_help_tip( '<p style="font-size: 25px; font-weight: bold;>available in premium version<br>Buy Activation Key form Setting Page</p>', true ) . '</button></div><div class="video-url-cls"><p>Type the URL of your Youtube Video, supports URLs of videos in websites only Youtube.</p><input class="video_input" style="width:100%;" type="url" class="nickx_video_text_url" value="' . esc_url( $product_video_url ) . '" name="nickx_video_text_url[]" Placeholder="https://www.youtube.com/embed/....."></div></div>';
+				<div style="display: inline-block;"><button type="button" class="button add_video" disabled><b><span class="dashicons dashicons-insert" style="vertical-align: middle;"></span></b> Add More Videos ' . wc_help_tip( '<p style="font-size: 25px; font-weight: bold;>available in premium version<br>Buy Activation Key form Setting Page</p>', true ) . '</button></div><div class="video-url-cls"><p>Enter the URL of your YouTube video. Only direct YouTube video links are supported.</p><input class="video_input" style="width:100%;" type="url" class="nickx_video_text_url" value="' . esc_url( $product_video_url ) . '" name="nickx_video_text_url[]" Placeholder="https://www.youtube.com/embed/....."></div></div>';
 			} else {
 				$this->nickx_meta_extend_call( get_the_ID() );
 			}

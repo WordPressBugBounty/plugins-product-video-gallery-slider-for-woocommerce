@@ -1,12 +1,12 @@
 ﻿=== Product Video Gallery for Woocommerce ===
 Contributors: nikhilgadhiya
 Donate link: https://www.paypal.com/paypalme/NikhilGadhiya
-Tags: product-video,woocommerce-product,video-slider,youtube,woocommerce
+Tags: product-video,woocommerce-product,video-slider,youtube,woocommerce,product-slider,
 Requires at least: 5.2.4
 Tested up to: 6.7.1
 Requires PHP: 5.2.4
-Stable tag: 1.4.2.9
-Date: 07/12/2024
+Stable tag: 1.4.3.0
+Date: 05/02/2025
 License: GPLv3 or later License
 URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -83,6 +83,14 @@ For adding a video to your product : open edit product page and insert your prod
 
 
 == Changelog ==
+
+= 1.4.3.0 =
+* Added a setting to change the video icon color.  
+* Replaced Font Awesome with SVG for better performance.  
+* Introduced the `nickx_after_product_video_gallery_thumbnails` hook. 
+* Introduced the `woocommerce_product_thumbnails` hook Enable/Disable option. 
+* Fixed various bugs.  
+* Tested compatibility with the latest version.
 
 = 1.4.2.9 =
 * Fix JavaScript errors and load vimeo script defer.

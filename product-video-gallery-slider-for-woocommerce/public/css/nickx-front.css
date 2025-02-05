@@ -1,21 +1,23 @@
-﻿.images.nickx_product_images_with_video span.nickx-popup{
-    bottom: 10px;
+﻿.images.nickx_product_images_with_video span.nickx-popup, .show_lightbox span.nickx-popup_trigger{
+    background-image: url('expand.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
     cursor: pointer;
-    display: none;
-    font-size: 25px;
-    opacity: 1;
-    padding: 15px 0;
     position: absolute;
+    width: 30px;
+
+}
+.images.nickx_product_images_with_video span.nickx-popup{
+    bottom: 10px;
+    display: none;
+    padding: 15px 0;
     right: 13px;
     z-index: 10;
 }
-.show_lightbox span.nickx-popup_trigger.fa.fa-expand {
+.show_lightbox span.nickx-popup_trigger {
     display: block;
-    font-size: 25px;
-    cursor: pointer;
     overflow: hidden;
     padding-top: 25px;
-    position: absolute;
     z-index: 1;
 }
 .nslick-slider{
@@ -197,16 +199,12 @@ i.thumb_arrow {
   cursor: pointer;
 }
 .video-thumbnail .video_icon_img {
-    background-position: -41px -14px !important;
-    height: 80px;
-    width: 80px;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
     -webkit-transform: translate(-50%, -50%);
     z-index: 1;
-    background-size: cover !important;
 }
 img.product_video_img.attachment-thumbnail.size-thumbnail {
     min-height: 60px;

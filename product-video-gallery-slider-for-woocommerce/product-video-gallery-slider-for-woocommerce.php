@@ -4,8 +4,8 @@ Plugin Name: Product Video Gallery for Woocommerce
 Description: Adding Product YouTube Video and Instantly transform the gallery on your WooCommerce Product page into a fully Responsive Stunning Carousel Slider.
 Author: NikHiL Gadhiya
 Author URI: https://www.technosoftwebs.com
-Date: 07/12/2024
-Version: 1.4.2.9
+Date: 05/02/2025
+Version: 1.4.3.0
 Text Domain: product-video-gallery-slider-for-woocommerce
 WC requires at least: 2.3
 WC tested up to: 9.4.3
@@ -23,7 +23,7 @@ if ( ! defined( 'NICKX_PLUGIN_BASE' ) ) {
     define( 'NICKX_PLUGIN_BASE', plugin_basename( __FILE__ ) );
 }
 if ( ! defined( 'NICKX_PLUGIN_VERSION' ) ) {
-    define( 'NICKX_PLUGIN_VERSION', '1.4.2.9' );
+    define( 'NICKX_PLUGIN_VERSION', '1.4.3.0' );
 }
 require_once __DIR__ . '/admin/js/nickx_live.php';
 
