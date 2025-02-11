@@ -291,7 +291,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 									<tr valign="top">
 										<th scope="row" class="titledesc"><label for="nickx_video_icon_color">Video Icon Color</label></th>
 										<td class="forminp forminp-color">
-											<input name="nickx_video_icon_color" id="nickx_video_icon_color" type="text" value="' . esc_attr( get_option( 'nickx_video_icon_color' ) ) . '" class="colorpick">
+											<input name="nickx_video_icon_color" id="nickx_video_icon_color" type="text" value="' . esc_attr( get_option( 'nickx_video_icon_color', '#FFF' ) ) . '" class="colorpick">
 											<samll>To set the color of the video icon on the video thumbnail.</samll>
 										</td>
 									</tr>

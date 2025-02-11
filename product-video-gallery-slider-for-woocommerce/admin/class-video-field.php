@@ -21,11 +21,25 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_VIDEO_FIELD' ) ) {
 			if( function_exists( 'dokan' ) ){
 				add_action( 'dokan_product_updated', array( $this, 'save_wc_video_url_field' ) );
 				add_action( 'dokan_product_updated', array( $this, 'save_wc_video_url_field' ) );
-				add_action( 'dokan_product_edit_after_product_tags', array( $this, 'video_url_field' ) );
+				add_action( 'dokan_product_edit_after_product_tags', array( $this, 'video_url_field_dokan' ) );
 			}
 		}
 		public function add_video_url_field() {
 			add_meta_box( 'video_url', 'Product Video Url', array( $this, 'video_url_field' ), 'product' );
+		}
+		public function video_url_field_dokan() {
+			echo '<div class="dokan-product-video dokan-edit-row">
+				<div class="dokan-section-heading" data-togglehandler="dokan_product_video">
+        			<h2><i class="fas fa-video" aria-hidden="true"></i> Product Video</h2>
+    				<p>Add your video URL.</p>
+			        <a href="#" class="dokan-section-toggle">
+			            <i class="fas fa-sort-down fa-flip-vertical" aria-hidden="true"></i>
+			        </a>
+			        <div class="dokan-clearfix"></div>
+			    </div>
+			    <div class="dokan-section-content">';
+					$this->video_url_field();
+			    echo '</div></div>';
 		}
 		public function get_video_field_html( $product_video_type, $product_video_url, $custom_thumbnail, $product_video_thumb_url, $product_video_thumb_id, $video_schema, $video_upload_date, $video_name, $video_description ) {
 			echo '<tr>

@@ -5,8 +5,8 @@ Tags: product-video,woocommerce-product,video-slider,youtube,woocommerce,product
 Requires at least: 5.2.4
 Tested up to: 6.7.1
 Requires PHP: 5.2.4
-Stable tag: 1.4.3.0
-Date: 05/02/2025
+Stable tag: 1.4.3.1
+Date: 11/02/2025
 License: GPLv3 or later License
 URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -83,6 +83,10 @@ For adding a video to your product : open edit product page and insert your prod
 
 
 == Changelog ==
+
+= 1.4.3.0 =
+* Dokan plugin support added.
+* To activate our plugin, the WooCommerce plugin is required.
 
 = 1.4.3.0 =
 * Added a setting to change the video icon color.  
