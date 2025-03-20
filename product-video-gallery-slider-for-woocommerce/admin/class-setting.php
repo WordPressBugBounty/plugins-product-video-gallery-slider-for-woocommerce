@@ -241,20 +241,27 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 										</td>
 									</tr>
 									<tr valign="top" ' . ( ( $lic_chk_stateus ) ? '' : 'class="primium_aria" title="AVAILABLE IN PREMIUM VERSION"' ) . '">
+										<th scope="row" class="titledesc"><label for="nickx_poster_img">Video Poster Image</label></th>
+										<td class="forminp forminp-checkbox">
+											<input name="nickx_poster_img" id="nickx_poster_img" type="checkbox" value="yes" ' . checked( 'yes', get_option( 'nickx_poster_img', 'no' ), false ) . '>
+											<samll class="lbl_tc">Only for Self Hosted Video, Enable this option if you set a custom thumbnail as the video poster image.<p> It'."'".'s available on the product edit page where you add the video.</p></samll>
+										</td>
+									</tr>
+									<tr valign="top" ' . ( ( $lic_chk_stateus ) ? '' : 'class="primium_aria" title="AVAILABLE IN PREMIUM VERSION"' ) . '">
 										<th scope="row" class="titledesc"><label for="nickx_videoloop">Video Looping</label></th>
 										<td class="forminp forminp-checkbox">
 											<input name="nickx_videoloop" id="nickx_videoloop" type="checkbox" value="yes" ' . checked( 'yes', get_option( 'nickx_videoloop' ), false ) . '>
-											<samll class="lbl_tc">Looping a video is allowing the video to play in a repeat mode.</samll>
-											<p><samll>Auto play works only when <b>Place of The Video</b> is <b>Before Product Gallery Images</b>.</samll></p>
+											<samll class="lbl_tc">Looping a video is allowing the video to play in a repeat mode.
+											<p>Auto play works only when <b>Place of The Video</b> is <b>Before Product Gallery Images</b>.</p></samll>
 										</td>
 									</tr>
 									<tr valign="top" ' . ( ( $lic_chk_stateus ) ? '' : 'class="primium_aria" title="AVAILABLE IN PREMIUM VERSION"' ) . '">
 										<th scope="row" class="titledesc"><label for="nickx_vid_autoplay">Auto Play Video</label></th>
 										<td class="forminp forminp-checkbox">
 											<input name="nickx_vid_autoplay" id="nickx_vid_autoplay" type="checkbox" value="yes" ' . checked( 'yes', get_option( 'nickx_vid_autoplay' ), false ) . '>
-											<samll>Auto play works only when <b>Place of The Video</b> is <b>Before Product Gallery Images</b>.</samll>
-											<p><samll>If you enable this option, the video will be muted by default, so you have to manually unmute the video.</samll></p>
-											<p><samll>Please pass <b>autoplay=1</b> parameter with your video url if you are using YouTube or Vimeo video.</samll></p>
+											<samll>Auto play works only when <b>Place of The Video</b> is <b>Before Product Gallery Images</b>.
+											<p>If you enable this option, the video will be muted by default, so you have to manually unmute the video.</p>
+											<p>Please pass <b>autoplay=1</b> parameter with your video url if you are using YouTube or Vimeo video.</p></samll>
 										</td>
 									</tr>
 									<tr valign="top" ' . ( ( $lic_chk_stateus ) ? '' : 'class="primium_aria" title="AVAILABLE IN PREMIUM VERSION"' ) . '">
@@ -439,6 +446,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 				register_setting( 'wc_product_video_gallery_options', 'nickx_videoloop' );
 				register_setting( 'wc_product_video_gallery_options', 'nickx_vid_autoplay' );
 				register_setting( 'wc_product_video_gallery_options', 'nickx_controls' );
+				register_setting( 'wc_product_video_gallery_options', 'nickx_poster_img' );
 				register_setting( 'wc_product_video_gallery_options', 'nickx_place_of_the_video' );
 				register_setting( 'wc_product_video_gallery_options', 'nickx_thumnails_layout' );
 			}

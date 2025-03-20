@@ -1,12 +1,12 @@
 ﻿=== Product Video Gallery for Woocommerce ===
 Contributors: nikhilgadhiya
 Donate link: https://www.paypal.com/paypalme/NikhilGadhiya
-Tags: product-video,woocommerce-product,video-slider,youtube,woocommerce,product-slider,
+Tags: product-video,woocommerce-product,video-slider,youtube,woocommerce,
 Requires at least: 5.2.4
-Tested up to: 6.7.1
+Tested up to: 6.7.2
 Requires PHP: 5.2.4
-Stable tag: 1.4.3.1
-Date: 11/02/2025
+Stable tag: 1.4.3.2
+Date: 20/03/2025
 License: GPLv3 or later License
 URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -83,6 +83,11 @@ For adding a video to your product : open edit product page and insert your prod
 
 
 == Changelog ==
+
+= 1.4.3.2 =
+* Removed the generic slider selector
+* Replaced <li> tags with <div> in slider thumbnails
+* Tested compatibility with the latest version.
 
 = 1.4.3.0 =
 * Dokan plugin support added.
