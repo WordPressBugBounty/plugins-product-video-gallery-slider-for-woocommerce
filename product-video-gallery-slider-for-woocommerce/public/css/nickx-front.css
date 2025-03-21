@@ -98,10 +98,10 @@
 .nslick-loading .nslick-slide{
     visibility: hidden;
 }
-#nickx-gallery .nslick-list.draggable .nslick-track {
+#nickx-gallery:not(.nslick-vertical) .nslick-list.draggable .nslick-track {
     display: flex !important;
 }
-#nickx-gallery .nslick-slide {
+#nickx-gallery:not(.nslick-vertical) .nslick-slide {
     height: inherit !important;
 }
 /* Arrows */

@@ -5,8 +5,8 @@ Tags: product-video,woocommerce-product,video-slider,youtube,woocommerce,
 Requires at least: 5.2.4
 Tested up to: 6.7.2
 Requires PHP: 5.2.4
-Stable tag: 1.4.3.2
-Date: 20/03/2025
+Stable tag: 1.4.3.3
+Date: 21/03/2025
 License: GPLv3 or later License
 URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -83,6 +83,11 @@ For adding a video to your product : open edit product page and insert your prod
 
 
 == Changelog ==
+
+= 1.4.3.3 =
+* Fixed the full height issue of the video thumbnail.
+* Fixed the broken layout of the vertical thumbnail slider.
+* Tested compatibility with the latest version.
 
 = 1.4.3.2 =
 * Removed the generic slider selector
