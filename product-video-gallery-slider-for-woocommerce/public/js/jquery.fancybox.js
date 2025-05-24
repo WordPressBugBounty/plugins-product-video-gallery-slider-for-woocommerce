@@ -2871,17 +2871,6 @@
     // =============================================
 
     cleanUp: function (e) {
-      setTimeout(function(e){
-        if(jQuery('.nickx-slider-for').hasClass('slick-initialized')){
-          jQuery('.nickx-slider-for')[0].nslick.refresh();
-        }
-        if(wc_prd_vid_slider_setting.nickx_arrowcolor!=''){
-          jQuery(".btn-prev, .btn-next").css("color",wc_prd_vid_slider_setting.nickx_arrowcolor); 
-        }
-        if(wc_prd_vid_slider_setting.nickx_arrowbgcolor!=''){
-          jQuery(".btn-prev, .btn-next").css("background",wc_prd_vid_slider_setting.nickx_arrowbgcolor);
-        }
-      },100);
       var self = this,
         instance,
         $focus = self.current.opts.$orig,
@@ -3101,7 +3090,9 @@
     // ===================
 
     open: function (items, opts, index) {
-      playPauseVideo("pause");
+      setTimeout(function(e){
+        playPauseVideo("pause");
+      },500);
       return new nFancyBox(items, opts, index);
     },
 

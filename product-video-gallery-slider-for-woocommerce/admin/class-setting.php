@@ -112,12 +112,6 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 										</td>
 									</tr>
 									<tr valign="top">
-										<th scope="row" class="titledesc"><label for="nickx_slider_swipe">Slider Swipe</label></th>
-										<td class="forminp forminp-checkbox">
-											<input name="nickx_slider_swipe" id="nickx_slider_swipe" type="checkbox" value="yes" ' . checked( 'yes', get_option( 'nickx_slider_swipe' ), false ) . '>
-										</td>
-									</tr>
-									<tr valign="top">
 										<th scope="row" class="titledesc"><label for="nickx_sliderfade">Slider Fade</label></th>
 										<td class="forminp forminp-checkbox">
 											<input name="nickx_sliderfade" id="nickx_sliderfade" type="checkbox" value="yes" ' . checked( 'yes', get_option( 'nickx_sliderfade' ), false ) . '>
@@ -421,7 +415,6 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 			register_setting( 'wc_product_video_gallery_options', 'nickx_slider_layout' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_slider_responsive' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_sliderautoplay' );
-			register_setting( 'wc_product_video_gallery_options', 'nickx_slider_swipe' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_sliderfade' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_arrowinfinite' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_arrowdisable' );

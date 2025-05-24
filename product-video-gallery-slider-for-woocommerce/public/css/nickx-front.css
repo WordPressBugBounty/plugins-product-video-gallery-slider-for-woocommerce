@@ -1,128 +1,147 @@
-﻿.images.nickx_product_images_with_video span.nickx-popup, .show_lightbox span.nickx-popup_trigger{
-    background-image: url('expand.svg');
-    background-size: contain;
-    background-repeat: no-repeat;
-    cursor: pointer;
-    position: absolute;
-    width: 30px;
-
+.images.nickx_product_images_with_video span.nickx-popup, .show_lightbox span.nickx-popup_trigger{
+  background-image: url('expand.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  position: absolute;
+  width: 30px;
 }
 .images.nickx_product_images_with_video span.nickx-popup{
-    bottom: 10px;
-    display: none;
-    padding: 15px 0;
-    right: 13px;
-    z-index: 10;
+  bottom: 10px;
+  display: none;
+  padding: 15px 0;
+  right: 13px;
+  z-index: 10;
 }
 .show_lightbox span.nickx-popup_trigger {
-    display: block;
-    overflow: hidden;
-    padding-top: 25px;
-    z-index: 1;
+  display: block;
+  overflow: hidden;
+  padding-top: 25px;
+  z-index: 2;
 }
-.nslick-slider{
-    position: relative;
-    display: block;
-    box-sizing: border-box;
-    -webkit-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-    -webkit-touch-callout: none;
-    -khtml-user-select: none;
-    -ms-touch-action: pan-y;
-    touch-action: pan-y;
-    -webkit-tap-highlight-color: transparent;
-    overflow:hidden;
+.show_lightbox .swiper-slide-active span.nickx-popup,
+.tc_video_slide.swiper-slide-active div.overlay-div{
+  display:block;
 }
-.nslick-list{
-    display: block;
-    margin: 0;
-    overflow: hidden;
-    position: relative;
-    padding: 0;
+.swiper {
+  width: 100%;
 }
-.nslick-list:focus{
-    outline: none;
+.swiper.nickx-slider-for {
+  height: 80%;
 }
-.nslick-list.dragging{
-    cursor: pointer;
-    cursor: hand;
+.swiper.nickx-slider-nav {
+  height: 20%;
+  box-sizing: border-box;
+  padding: 10px 0;
 }
-.nslick-slider .nslick-track,
-.nslick-slider .nslick-list{
-    -webkit-transform: translate3d(0, 0, 0);
-       -moz-transform: translate3d(0, 0, 0);
-        -ms-transform: translate3d(0, 0, 0);
-         -o-transform: translate3d(0, 0, 0);
-            transform: translate3d(0, 0, 0);
+.nickx_product_images_with_video.v-left .swiper.nickx-slider-nav,
+.nickx_product_images_with_video.v-right .swiper.nickx-slider-nav {
+  height: 80%;
+  width: 120px;
+  padding: 0;
+  max-height: 430px;
 }
-.nslick-track{
-    position: relative;
-    top: 0;
-    left: 0;
-    display: block;
+.nickx_product_images_with_video.v-left,
+.nickx_product_images_with_video.v-right {
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 10px;
 }
-.nslick-track:before,
-.nslick-track:after{
-    display: table;
-    content: '';
+.nickx_product_images_with_video.v-right {
+  flex-direction: row !important;
 }
-.nslick-track:after{
-    clear: both;
+.grid div#nickx-gallery .swiper-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-gap: 3px;
 }
-.nslick-slide{
-    float: left;
-    height: 100%;
-    min-height: 1px;
-    margin: 0;
+.swiper-slide {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  user-select: none;
 }
-.zoom.woocommerce-product-gallery__image.nslick-slide {
-    float: left !important;
+.swiper-slide-active iframe{
+  display: block !important;
 }
-[dir='rtl'] .nslick-slide, [dir='rtl'] .zoom.woocommerce-product-gallery__image.nslick-slide{
-    float: right !important;
+.swiper-slide img, .swiper-slide video, .swiper-slide iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
-.nslick-slide.dragging img{
-    pointer-events: none;
+div#nickx-gallery .swiper-wrapper .swiper-slide img{
+  max-height: 100px;
+  max-width: 100px;
 }
-.nslick-vertical .nslick-slide{
-    height: auto;
+.nickx-slider-nav {
+  height: 100px;
 }
-.nslick-arrow.nslick-hidden {
-    display: none;
+.nickx-slider-nav .swiper-slide {
+  height: auto !important;
+  opacity: 0.7;
 }
-.nslick-slide.nslick-loading img{
-    display: none;
+.nickx-slider-nav .swiper-slide-thumb-active,
+.nickx-slider-nav .nickx-thumbnail:hover {
+  opacity: 1;
 }
-.nslick-loading .nslick-slide{
-    visibility: hidden;
+.swiper-slide-thumb-active img {
+  border: 2px solid;
 }
-#nickx-gallery:not(.nslick-vertical) .nslick-list.draggable .nslick-track {
-    display: flex !important;
+.video-thumbnail {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
 }
-#nickx-gallery:not(.nslick-vertical) .nslick-slide {
-    height: inherit !important;
+.swiper-button-next,
+.swiper-button-prev {
+  padding: 30px 20px;
+  z-index: 999 !important;
+  pointer-events: auto !important;
 }
-/* Arrows */
-i.thumb_arrow {
-    position: absolute;
-    top: 42%;
-    z-index: 1;
+.swiper-vertical .thumb_arrow {
+  top: unset;
+  transform: rotateZ(90deg);
 }
-.nslick-vertical i.thumb_arrow {
-    top: unset;
-    transform: rotateZ(90deg);
+.swiper-vertical .swiper-button-next.thumb_arrow {
+  bottom: -9px;
+  right: 0px;
+  position-area: bottom;
 }
-.nslick-vertical i.btn-next.thumb_arrow{
-    bottom: 0px;
-    right: 42%;
+.swiper-vertical .swiper-button-prev.thumb_arrow {
+  position-area: top;
+  top: 15px;
+  left: 0;
 }
-.nslick-vertical i.btn-prev.thumb_arrow{
-    left: 42%;
+.grid div#nickx-gallery .thumb_arrow {
+  display: none;
 }
-.nickx-slider-for .zoomImg {
-    cursor: crosshair;
+.thumb_arrow {
+  padding: 10px;
+  font-size: 10px;
+}
+.thumb_arrow:after{
+  font-size: 22px;
+  font-weight: bold;
+}
+.video-thumbnail .video_icon_img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  z-index: 1;
+}
+.nickx-slider-for {
+  position: relative;
+}
+.zoomContainer {
+  z-index: 1 !important;
+}
+.nickx-slider-for .zoomContainer {
+  top: 0 !important;
+  left: 0 !important;
 }
 .admin-bar .fancybox-container {
     z-index: 999999;
@@ -130,147 +149,15 @@ i.thumb_arrow {
 .single-product.woocommerce span.onsale{
     z-index:9;
 }
-.nickx-slider-for .btn-prev, .nickx-slider-for .btn-next {
-    position: absolute;
-    top: 45%;
-    z-index: 999;
-    width: 40px;
-    height: 35px;
-    line-height: 37px;
-    border-radius: 0px;
-    padding: 0;
-    font-size: 25px;
-    border: none;
-    text-align: center;
-    opacity: 0;
-    transition: all 0.3s ease-in-out;
-    -moz-transition: all 0.3s ease-in-out;
-    -ms-transition: all 0.3s ease-in-out;
-    -o-transition: all 0.3s ease-in-out;
-    -webkit-transition: all 0.3s ease-in-out;
-}
-.nickx-slider-for .btn-next {
-    margin-right: -20px;
-}
-.nickx-slider-for .btn-prev {
-    margin-left: -20px;
-}
-.nickx-slider-for:hover .btn-prev, .nickx-slider-for:hover .btn-next {
-    opacity: 1;
-    margin: 0px;
-}
-.btn-next {
-    right: 0px;
-}
-.btn-prev {
-    left:0;
-}
-.btn-prev.nslick-disabled,
-.btn-next.nslick-disabled{
-    opacity: .25;
-}
-.btn-prev, .btn-next {
-    color: #fff;
-    background: #000000;
-    cursor:pointer;
-}
-.images.nickx_product_images_with_video .vertical-img-left.nickx-slider-for{
-    width: 79%;
-    float: right;
-    margin-left: 1%;
-}
-.images.nickx_product_images_with_video .vertical-img-right.nickx-slider-for{
-    width: 79%;
-    float: left;
-    margin-right: 1%;
-}
-.nickx-slider-for{
-    overflow: hidden;
-    margin-bottom: 7px;
-}
-#nickx-gallery .nslick-slide{
-    margin:0;
-    display: block;
-    border: 1px solid transparent;
-}
-.nslick-slide.nslick-current.nslick-active{
-    position:relative;
-}
-#nickx-gallery .nslick-list.draggable .nslick-track.techno_stop_slide {
-    transform: translate3d(0,0,0) !important;
-}
-.video-thumbnail {
-  position: relative;
-  display: inline-block;
-  cursor: pointer;
-}
-.video-thumbnail .video_icon_img {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -webkit-transform: translate(-50%, -50%);
-    z-index: 1;
-}
-img.product_video_img.attachment-thumbnail.size-thumbnail {
-    min-height: 60px;
-    min-width: 60px;
-    object-fit: cover;
-}
-.images.nickx_product_images_with_video {
-    max-width: 700px;
-}
-.nickx-slider-for .nslick-list.draggable .nslick-slide:first-child {
-    min-height: 300px !important;
-}
-span#product_gallery_shortcode .images,.wp-block-woocommerce-product-image-gallery .images{
-    float: none !important;
-    width: 100% !important;
-}
-div.overlay-div {
-    display: none;
-}
-.tc_video_slide.nslick-slide.nslick-current.nslick-active .product_video_iframe{
-    display: block !important;
-}
-.show_lightbox .nslick-current.nslick-active span.nickx-popup,
-.tc_video_slide.nslick-slide.nslick-current.nslick-active div.overlay-div{
-    display:block;
-}
-.loading .zoom:not(:first-child), .loading #nickx-gallery .nickx-thumbnail:not(:first-child) {
-    display: none;
-}
-.images.nickx_product_images_with_video .fluid-width-video-wrapper {
-    padding-top: 100% !important;
-}
-.nickx-slider-nav .nickx-thumbnail img{
-    cursor:pointer;
-    height: 100%;
-    opacity:.8;
-    min-height: 80px;
-}
-.nickx-slider-nav .nickx-thumbnail.active_slide img,
-.nickx-slider-nav .nslick-current img,
-.nickx-slider-nav .nickx-thumbnail img:hover {
-    opacity:1;
-}
-div#nickx-gallery.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-    grid-gap: 3px;
-}
-div#nickx-gallery .nickx-thumbnail img,.slider.nickx-slider-for.nslick-initialized.nslick-slider .nslick-slide img{
-    width: 100%;
-    height: 100%;
-}
 @media (max-width:767px){
-    .nickx-slider-for .nslick-list.draggable {
-        min-height: 10px !important;
-    }
-    .images.nickx_product_images_with_video .vertical-img-left.nickx-slider-for.yes,
-    .images.nickx_product_images_with_video .vertical-img-right.nickx-slider-for.yes{
-        width: 100%;
-        float: none;
-        margin-left: 0;
-    }
+  .nickx_product_images_with_video.yes.v-left,
+  .nickx_product_images_with_video.yes.v-right{
+    flex-direction: column;
+  }
+  .nickx_product_images_with_video.yes.v-left .swiper.nickx-slider-nav,
+  .nickx_product_images_with_video.yes.v-right .swiper.nickx-slider-nav{
+    width: 100%;
+    height: 20%;
+    padding: 10px 0;
+  }
 }

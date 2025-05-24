@@ -3,10 +3,10 @@ Contributors: nikhilgadhiya
 Donate link: https://www.paypal.com/paypalme/NikhilGadhiya
 Tags: product-video,woocommerce-product,video-slider,youtube,woocommerce,
 Requires at least: 5.2.4
-Tested up to: 6.7.2
-Requires PHP: 5.2.4
-Stable tag: 1.4.3.3
-Date: 21/03/2025
+Tested up to: 6.8.1
+Requires PHP: 7.4
+Stable tag: 1.5
+Date: 24/05/2025
 License: GPLv3 or later License
 URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -81,8 +81,22 @@ For adding a video to your product : open edit product page and insert your prod
 8. Premium Features.
 9. Premium Features.
 
+== Third Party Libraries/Resources == 
+
+This plugin uses the following third-party libraries:
+
+1. [Swiper](https://swiperjs.com/)  
+   License: [MIT License](https://opensource.org/licenses/MIT)
+
+
+All external libraries are loaded via their respective CDNs or bundled in the plugin with adherence to their licenses.
 
 == Changelog ==
+
+= 1.5 =
+* Replace Slick Slider with Swiper.js
+* Bug fixes.
+* Tested compatibility with the latest version.
 
 = 1.4.3.3 =
 * Fixed the full height issue of the video thumbnail.
@@ -353,6 +367,12 @@ For adding a video to your product : open edit product page and insert your prod
 * Finalized stable Release.
 
 == Upgrade Notice ==
+
+= 1.5 =
+* Replace Slick Slider with Swiper.js
+* Bug fixes.
+* Tested compatibility with the latest version.
+* Please update plugin settings after update plugin and clear your site and browser cache.
 
 = 1.3.6 =
 * Thank you for using *Product Video Gallery for Woocommerce* This release include general Bug fixes and code improvement.

@@ -4,12 +4,12 @@ Plugin Name: Product Video Gallery for Woocommerce
 Description: Adding Product YouTube Video and Instantly transform the gallery on your WooCommerce Product page into a fully Responsive Stunning Carousel Slider.
 Author: NikHiL Gadhiya
 Author URI: https://www.technosoftwebs.com
-Date: 21/03/2025
-Version: 1.4.3.3
+Date: 24/05/2025
+Version: 1.5
 Text Domain: product-video-gallery-slider-for-woocommerce
 Requires Plugins: woocommerce
 WC requires at least: 2.3
-WC tested up to: 9.7.1
+WC tested up to: 9.8.5
 
 @package WC_PRODUCT_VIDEO_GALLERY
 -------------------------------------------------*/
@@ -24,7 +24,7 @@ if ( ! defined( 'NICKX_PLUGIN_BASE' ) ) {
     define( 'NICKX_PLUGIN_BASE', plugin_basename( __FILE__ ) );
 }
 if ( ! defined( 'NICKX_PLUGIN_VERSION' ) ) {
-    define( 'NICKX_PLUGIN_VERSION', '1.4.3.3' );
+    define( 'NICKX_PLUGIN_VERSION', '1.5' );
 }
 require_once __DIR__ . '/admin/js/nickx_live.php';
 
@@ -39,7 +39,6 @@ function nickx_activation_hook_callback() {
 			'nickx_slider_responsive' => 'no',
 			'nickx_sliderautoplay' => 'no',
 			'nickx_sliderfade' => 'no',
-			'nickx_slider_swipe' => 'no',
 			'nickx_arrowinfinite' => 'yes',
 			'nickx_arrowdisable' => 'yes',
 			'nickx_arrow_thumb' => 'no',
@@ -59,7 +58,7 @@ function nickx_activation_hook_callback() {
 			'nickx_show_only_video' => 'no',
 			'nickx_thumbnails_to_show' => 4,
 			'nickx_arrowcolor' => '#000',
-			'nickx_arrowbgcolor' => '#FFF',
+			'nickx_arrowbgcolor' => '',
 			'nickx_thumnails_layout' => 'slider',
 		);
 		foreach ( $nickx_set_settings as $nickx_key => $nickx_set_setting ) {
