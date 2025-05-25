@@ -5,8 +5,8 @@ Tags: product-video,woocommerce-product,video-slider,youtube,woocommerce,
 Requires at least: 5.2.4
 Tested up to: 6.8.1
 Requires PHP: 7.4
-Stable tag: 1.5
-Date: 24/05/2025
+Stable tag: 1.5.1
+Date: 25/05/2025
 License: GPLv3 or later License
 URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -92,6 +92,10 @@ This plugin uses the following third-party libraries:
 All external libraries are loaded via their respective CDNs or bundled in the plugin with adherence to their licenses.
 
 == Changelog ==
+
+= 1.5.1 =
+* Removed unnecessary dashicons dependency from wp_enqueue_style.
+* Fixed missing or incorrect version parameter in wp_enqueue_style to ensure proper cache busting.
 
 = 1.5 =
 * Replace Slick Slider with Swiper.js
