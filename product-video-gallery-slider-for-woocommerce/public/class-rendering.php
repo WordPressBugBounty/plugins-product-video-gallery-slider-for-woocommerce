@@ -20,7 +20,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 		}
 		private function add_actions( $extend ) {
 			$this->extend = $extend;
-			add_action( 'wp_enqueue_scripts', array( $this, 'nickx_enqueue_scripts' ) );
+			add_action( 'wp_enqueue_scripts', array( $this, 'nickx_enqueue_scripts' ), 99 );
 			add_shortcode( 'product_gallery_shortcode', array( $this, 'product_gallery_shortcode_callback' ) );
 			add_filter( 'wc_get_template', array( $this, 'nickx_get_template' ), 99, 5 );
 		}
@@ -39,7 +39,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 					wp_enqueue_style( 'nickx-swiper-css', plugins_url( 'css/swiper-bundle.min.css', __FILE__ ), array(), '11.2.6', 'all' );
 					wp_enqueue_style( 'nickx-front-css', plugins_url( 'css/nickx-front.css', __FILE__ ), array('nickx-swiper-css'), NICKX_PLUGIN_VERSION, 'all' );
 					wp_enqueue_script( 'nickx-swiper-js', plugins_url( 'js/swiper-bundle.min.js', __FILE__ ), array( 'jquery' ), '11.2.6', true );
-					wp_register_script( 'nickx-front-js', plugins_url( 'js/nickx.front.js', __FILE__ ), array( 'jquery' ), NICKX_PLUGIN_VERSION, true );
+					wp_register_script( 'nickx-front-js', plugins_url( 'js/nickx.front.js', __FILE__ ), array( 'jquery', 'nickx-swiper-js' ), NICKX_PLUGIN_VERSION, true );
 					$video_type = get_post_meta( get_the_ID(), '_nickx_product_video_type', true );
 					if( ( is_array( $video_type ) && in_array( 'nickx_video_url_vimeo', get_post_meta( get_the_ID(), '_nickx_product_video_type', true ) ) ) || get_post_meta( get_the_ID(), '_nickx_product_video_type', true ) == 'nickx_video_url_vimeo' ) {
 						wp_enqueue_script( 'nickx-vimeo-js', 'https://player.vimeo.com/api/player.js', '1.0', true, array( 'strategy' => 'defer' ) );
@@ -61,7 +61,6 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 						'nickx_rtl'                => is_rtl(),
 						'nickx_arrowinfinite'      => get_option( 'nickx_arrowinfinite' ),
 						'nickx_arrowdisable'       => get_option( 'nickx_arrowdisable' ),
-						'nickx_arrow_thumb'        => get_option( 'nickx_arrow_thumb' ),
 						'nickx_hide_thumbnails'    => get_option( 'nickx_hide_thumbnails' ),
 						'nickx_hide_thumbnail'     => get_option( 'nickx_hide_thumbnail' ),
 						'nickx_adaptive_height'    => get_option( 'nickx_adaptive_height', 'yes' ),
@@ -203,10 +202,10 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 			if( get_option( 'nickx_slider_responsive' ) == 'yes' ){
 				$css_classes[] = 'yes';
 			}
-			if( get_option( 'nickx_thumnails_layout' ) == 'slider' ){
-				$css_classes[] = 'v-'.get_option( 'nickx_slider_layout' );
-			} else {
+			if( get_option( 'nickx_thumnails_layout' ) == 'grid' ){
 				$css_classes[] = 'grid';
+			} else {
+				$css_classes[] = 'v-'.get_option( 'nickx_slider_layout' );
 			}
 			return implode( ' ', $css_classes );
 		}
@@ -269,7 +268,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 				} else {
 					echo apply_filters( 'woocommerce_single_product_image_html', sprintf( '<div class="swiper-slide zoom woocommerce-product-gallery__image"><img class="attachment-woocommerce_single size-woocommerce_single wp-post-image" data-skip-lazy="true" src="%s" data-zoom-image="%s" alt="%s" /></div>', wc_placeholder_img_src(), wc_placeholder_img_src(), __( 'Placeholder', 'woocommerce' ) ), $post->ID );
 				}
-				echo '</div><div class="swiper-button-next"></div><div class="swiper-button-prev"></div></div>';
+				echo '</div><div class="swiper-button-next main_arrow"></div><div class="swiper-button-prev main_arrow"></div></div>';
 				if ( get_option( 'nickx_hide_thumbnails' ) != 'yes' ) {
 					if( $show_thumb > 1 || get_option('nickx_hide_thumbnail') != 'yes' ){
 						$this->nickx_show_product_thumbnails();
@@ -371,7 +370,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 							$this->nickx_get_video_thumbanil_html( $post, $thumbnail_size );
 						}
 					}
-					echo '</div><div class="swiper-button-next thumb_arrow"></div><div class="swiper-button-prev thumb_arrow"></div></div>';
+					echo '</div>'. ( ( get_option( 'nickx_arrow_thumb' ) == 'yes' ) ? '<div class="swiper-button-next thumb_arrow"></div><div class="swiper-button-prev thumb_arrow"></div>' : '' ). '</div>';
 				}
 			} else {
 				woocommerce_show_product_thumbnails();

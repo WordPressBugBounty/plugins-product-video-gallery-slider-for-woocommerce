@@ -5,8 +5,8 @@ Tags: product-video,woocommerce-product,video-slider,youtube,woocommerce,
 Requires at least: 5.2.4
 Tested up to: 6.8.1
 Requires PHP: 7.4
-Stable tag: 1.5.1.1
-Date: 28/05/2025
+Stable tag: 1.5.1.2
+Date: 05/06/2025
 License: GPLv3 or later License
 URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -92,6 +92,12 @@ This plugin uses the following third-party libraries:
 All external libraries are loaded via their respective CDNs or bundled in the plugin with adherence to their licenses.
 
 == Changelog ==
+
+= 1.5.1.2 =
+* Fixed issue with the number of thumbnails and navigation arrows.
+* Resolved JavaScript conflict with other plugins/themes.
+* General bug fixes and improvements.
+* Tested and confirmed compatibility with the latest WordPress and WooCommerce versions.
 
 = 1.5.1.1 =
 * Fixed an issue where the product had only a single image/video, and Hide Thumbnail (if only one image/video) option was enabled.
