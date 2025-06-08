@@ -5,7 +5,7 @@ Tags: product-video,woocommerce-product,video-slider,youtube,woocommerce,
 Requires at least: 5.2.4
 Tested up to: 6.8.1
 Requires PHP: 7.4
-Stable tag: 1.5.1.2
+Stable tag: 1.5.1.3
 Date: 05/06/2025
 License: GPLv3 or later License
 URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -92,6 +92,9 @@ This plugin uses the following third-party libraries:
 All external libraries are loaded via their respective CDNs or bundled in the plugin with adherence to their licenses.
 
 == Changelog ==
+
+= 1.5.1.3 =
+* Fixed issue where fewer thumbnails than the set number caused layout problems in vertical mode.
 
 = 1.5.1.2 =
 * Fixed issue with the number of thumbnails and navigation arrows.

@@ -151,7 +151,7 @@ const nquery = jQuery;
 			if(wc_prd_vid_slider_setting.nickx_hide_thumbnails != 'yes' && nquery('.nickx-slider-nav').length > 0 ){
 				if( wc_prd_vid_slider_setting.nickx_thumnails_layout == 'slider' ){
 					slider_thumbs = new Swiper('.nickx-slider-nav', {
-						slidesPerView: parseInt(wc_prd_vid_slider_setting.nickx_thumbnails_to_show),
+						slidesPerView: slide_count > parseInt(wc_prd_vid_slider_setting.nickx_thumbnails_to_show) ? parseInt(wc_prd_vid_slider_setting.nickx_thumbnails_to_show) : slide_count,
 						watchSlidesProgress: true,
 						centeredSlides: false,
 						focusableElements: true,
