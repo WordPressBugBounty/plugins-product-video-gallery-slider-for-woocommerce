@@ -36,9 +36,9 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 						wp_enqueue_script( 'nickx-zoom-js', plugins_url( 'js/jquery.zoom.min.js', __FILE__ ), array( 'jquery' ), '1.7.4', true );
 						wp_enqueue_script( 'nickx-elevatezoom-js', plugins_url( 'js/jquery.elevatezoom.min.js', __FILE__ ), array( 'jquery' ), NICKX_PLUGIN_VERSION, true );
 					}
-					wp_enqueue_style( 'nickx-swiper-css', plugins_url( 'css/swiper-bundle.min.css', __FILE__ ), array(), '11.2.6', 'all' );
+					wp_enqueue_style( 'nickx-swiper-css', plugins_url( 'css/swiper-bundle.min.css', __FILE__ ), array(), NICKX_PLUGIN_VERSION, 'all' );
 					wp_enqueue_style( 'nickx-front-css', plugins_url( 'css/nickx-front.css', __FILE__ ), array('nickx-swiper-css'), NICKX_PLUGIN_VERSION, 'all' );
-					wp_enqueue_script( 'nickx-swiper-js', plugins_url( 'js/swiper-bundle.min.js', __FILE__ ), array( 'jquery' ), '11.2.6', true );
+					wp_enqueue_script( 'nickx-swiper-js', plugins_url( 'js/swiper-bundle.min.js', __FILE__ ), array( 'jquery' ), NICKX_PLUGIN_VERSION, true );
 					wp_register_script( 'nickx-front-js', plugins_url( 'js/nickx.front.js', __FILE__ ), array( 'jquery', 'nickx-swiper-js' ), NICKX_PLUGIN_VERSION, true );
 					$video_type = get_post_meta( get_the_ID(), '_nickx_product_video_type', true );
 					if( ( is_array( $video_type ) && in_array( 'nickx_video_url_vimeo', get_post_meta( get_the_ID(), '_nickx_product_video_type', true ) ) ) || get_post_meta( get_the_ID(), '_nickx_product_video_type', true ) == 'nickx_video_url_vimeo' ) {
