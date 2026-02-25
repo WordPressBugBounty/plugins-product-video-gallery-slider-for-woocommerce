@@ -158,7 +158,7 @@ function playPauseVideo(control){
 						}`;
 						document.head.appendChild(navstyle);
 					}
-					slider_thumbs = new nSwiper(nquery('.nickx-slider-nav')[0], {
+					slider_thumbs = new nSwiper('.nickx-slider-nav', {
 						slidesPerView: parseInt(wc_prd_vid_slider_setting.nickx_thumbnails_to_show),
 						watchSlidesProgress: true,
 						centeredSlides: false,
@@ -182,7 +182,7 @@ function playPauseVideo(control){
 				    slideWrapper.slidePrev();
 				});
 			}
-			let slideWrapper = new nSwiper(nquery('.nickx-slider-for')[0], {
+			const slideWrapper = new nSwiper('.nickx-slider-for', {
 		    spaceBetween: 10,
 		    focusableElements: true,
 		    thumbs: { nswiper: slider_thumbs },

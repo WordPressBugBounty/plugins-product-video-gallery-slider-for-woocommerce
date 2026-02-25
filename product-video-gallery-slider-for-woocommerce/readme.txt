@@ -3,10 +3,10 @@ Contributors: nikhilgadhiya
 Donate link: https://www.paypal.com/paypalme/NikhilGadhiya
 Tags: product-video,woocommerce-product,video-slider,youtube,woocommerce,
 Requires at least: 5.2.4
-Tested up to: 6.8.1
+Tested up to: 6.9.1
 Requires PHP: 7.4
-Stable tag: 1.5.1.5
-Date: 14/06/2025
+Stable tag: 1.5.1.6
+Date: 25/02/2026
 License: GPLv3 or later License
 URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -92,6 +92,14 @@ This plugin uses the following third-party libraries:
 All external libraries are loaded via their respective CDNs or bundled in the plugin with adherence to their licenses.
 
 == Changelog ==
+
+= 1.5.1.6 =
+* Added a lightbox icon and position change setting
+* Added referrerpolicy support for YouTube iframes
+* Added WPML compatibility: if a video is not added in the secondary language, it will load from the primary (default) language
+* Fixed the lightbox video support issue.
+* Bug fixes.
+* Tested compatibility with the latest version.
 
 = 1.5.1.5 =
 * Renamed Swiper JS library by adding an "n" prefix to resolve JavaScript conflicts with other plugins and themes.

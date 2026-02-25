@@ -110,7 +110,7 @@
 
     iframe: {
       // Iframe template
-      tpl: '<iframe id="nfancybox-frame{rnd}" name="nfancybox-frame{rnd}" class="nfancybox-iframe" allowfullscreen="allowfullscreen" allow="autoplay; fullscreen" src=""></iframe>',
+      tpl: '<iframe id="nfancybox-frame{rnd}" name="nfancybox-frame{rnd}" class="nfancybox-iframe" allowfullscreen="allowfullscreen" allow="autoplay; fullscreen" src="" referrerpolicy="strict-origin-when-cross-origin"></iframe>',
 
       // Preload iframe before displaying it
       // This allows to calculate iframe content width and height
@@ -129,7 +129,7 @@
 
     // For HTML5 video only
     video: {
-      tpl: '<video class="nfancybox-video" controls controlsList="nodownload" poster="{{poster}}">' +
+      tpl: '<video class="nfancybox-video" controls controlsList="nodownload" poster="{{poster}}" src="{{src}}">' +
         '<source src="{{src}}" type="{{format}}" />' +
         'Sorry, your browser doesn\'t support embedded videos, <a href="{{src}}">download</a> and watch with your favorite video player!' +
         "</video>",

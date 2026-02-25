@@ -1,5 +1,6 @@
 .images.nickx_product_images_with_video span.nickx-popup, .show_lightbox span.nickx-popup_trigger{
-  background-image: url('expand.svg');
+  /* background-image: url('expand.svg'); */
+  background-image: url('magnifying-glass-zoom-in.svg');
   background-size: contain;
   background-repeat: no-repeat;
   cursor: pointer;
@@ -85,13 +86,19 @@ div.overlay-div {
 .nickx-slider-nav .nickx-thumbnail:hover {
   opacity: 1;
 }
+.nswiper-fade .nswiper-slide {
+    opacity: 0 !important;
+}
+.nswiper-fade .nswiper-slide-active {
+    opacity: 1 !important;
+}
 .video-thumbnail {
   position: relative;
   cursor: pointer;
 }
 .nswiper-button-next,
 .nswiper-button-prev {
-  padding: 30px 20px;
+  padding: 25px 15px;
   z-index: 999 !important;
   pointer-events: auto !important;
 }
@@ -175,5 +182,25 @@ div.overlay-div {
     width: 100%;
     height: 20%;
     padding: 10px 0;
+  }
+}
+.woocommerce.woocommerce-page .wp-block-column .images.nickx_product_images_with_video {
+  width: 100%;
+  float: none;
+}
+@-moz-document url-prefix() {
+  .nswiper-vertical .nswiper-button-prev.thumb_arrow {
+    left: 35% !important;
+  }
+  .nswiper-vertical .nswiper-button-next.thumb_arrow {
+    right: 35% !important;
+  }
+}
+@supports (-webkit-hyphens: none) and (not (-webkit-touch-callout: none)) {
+  .nswiper-vertical .nswiper-button-prev.thumb_arrow {
+    left: 35% !important;
+  }
+  .nswiper-vertical .nswiper-button-next.thumb_arrow {
+    right: 35% !important;
   }
 }

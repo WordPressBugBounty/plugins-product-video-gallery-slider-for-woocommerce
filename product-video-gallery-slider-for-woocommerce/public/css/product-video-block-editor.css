@@ -1,0 +1,8 @@
+.wp-block-nickx-product-video-block{
+    padding:10px;
+    border:1px dashed #ddd;
+    background:#fafafa;
+}
+.wp-block-nickx-product-video-block .components-server-side-render__content{
+    padding:8px 0;
+}

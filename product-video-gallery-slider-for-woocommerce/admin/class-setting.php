@@ -38,6 +38,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 			wp_enqueue_media();
 			wp_enqueue_style( 'wp-color-picker' );
 			wp_enqueue_script( 'wp-color-picker' );
+			$pugin_path = plugin_dir_url( __FILE__ );
 			echo '<style type="text/css">
 			.boxed{padding:30px 0}
 			.techno_tabs label{font-family:sans-serif;font-weight:400;vertical-align:top;font-size:15px}
@@ -151,7 +152,29 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 										</td>
 									</tr>
 									<tr valign="top">
-										<th scope="row" class="titledesc"><label for="nickx_show_zoom">Zoom style</label></th>
+										<th scope="row" class="titledesc"><label for="nickx_lightbox_icon">Light-box Icon</label></th>
+                    <td class="forminp">
+                      <input type="radio" name="nickx_lightbox_icon" id="nickx_lightbox_icon1" value="magnifying-glass-zoom-in.svg" ' . checked( 'magnifying-glass-zoom-in.svg', get_option( 'nickx_lightbox_icon', 'magnifying-glass-zoom-in.svg' ), false ) . '>
+                      <label for="nickx_lightbox_icon1"><img style="width:40px;height:40px;vertical-align:middle;margin-right:6px;" src="' . plugins_url( '../public/css/magnifying-glass-zoom-in.svg', __FILE__ ) . '"></label>
+                      <input type="radio" name="nickx_lightbox_icon" id="nickx_lightbox_icon2" value="expand.svg" ' . checked( 'expand.svg', get_option( 'nickx_lightbox_icon' ), false ) . '>
+                      <label for="nickx_lightbox_icon2"><img style="width:40px;height:40px;vertical-align:middle;margin-left:6px;" src="' . plugins_url( '../public/css/expand.svg', __FILE__ ) . '"></label>
+                      <samll class="lbl_tc">Choose icon used for Light-box/fancybox trigger.</samll>
+                    </td>
+                  </tr>
+                  <tr valign="top">
+                    <th scope="row" class="titledesc"><label for="nickx_lightbox_icon_position">Light-box Icon Position</label></th>
+                    <td class="forminp">
+                      <select name="nickx_lightbox_icon_position" id="nickx_lightbox_icon_position">
+                        <option value="top-right" ' . selected( 'top-right', get_option( 'nickx_lightbox_icon_position' ), false ) . '>Top Right</option>
+                        <option value="bottom-right" ' . selected( 'bottom-right', get_option( 'nickx_lightbox_icon_position','bottom-right' ), false ) . '>Bottom Right</option>
+                        <option value="top-left" ' . selected( 'top-left', get_option( 'nickx_lightbox_icon_position' ), false ) . '>Top Left</option>
+                        <option value="bottom-left" ' . selected( 'bottom-left', get_option( 'nickx_lightbox_icon_position' ), false ) . '>Bottom Left</option>
+                      </select>
+                      <samll class="lbl_tc">Set position of the lightbox icon on gallery.</samll>
+                    </td>
+                  </tr>
+							    <tr valign="top">
+								    <th scope="row" class="titledesc"><label for="nickx_show_zoom">Zoom style</label></th>
 										<td class="forminp forminp-checkbox">
 											<select name="nickx_show_zoom" id="nickx_show_zoom">
 												<option value="window" ' . selected( 'window', get_option( 'nickx_show_zoom' ), false ) . '>Window Right side</option>
@@ -177,14 +200,14 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 										<th scope="row" class="titledesc"><label for="nickx_template">Allow Template Filter</label></th>
 										<td class="forminp forminp-checkbox">
 											<input name="nickx_template" id="nickx_template" type="checkbox" value="yes" ' . checked( 'yes', get_option( 'nickx_template', 'no' ), false ) . '>
-											<samll class="lbl_tc">Enable this if your single product pages edited with help of any page builders Divi Builder, Elementor Builder etc.</samll>
+											<samll class="lbl_tc">Enable this if your single product pages edited with help of any page builders Divi Builder, Elementor Builder, Block Editor etc.</samll>
 										</td>
 									</tr>
 									<tr valign="top">
 										<th scope="row" class="titledesc"><label for="nickx_gallery_action">Remove Action</label></th>
 										<td class="forminp forminp-checkbox">
 											<input name="nickx_gallery_action" id="nickx_gallery_action" type="checkbox" value="yes" ' . checked( 'yes', get_option( 'nickx_gallery_action', 'no' ), false ) . '>
-											<samll class="lbl_tc">Enable this if your single product pages edited with help of Divi Builder.</samll>
+											<samll class="lbl_tc">Enable this if your single product pages edited with help of any page builders Divi Builder, Elementor Builder, Block Editor etc.</samll>
 										</td>
 									</tr>
 									<tr valign="top">
@@ -231,6 +254,14 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 										<th scope="row" class="titledesc"><label for="nickx_controls">Show Video Controls</label></th>
 										<td class="forminp forminp-checkbox">
 											<input name="nickx_controls" id="nickx_controls" type="checkbox" value="yes" ' . checked( 'yes', get_option( 'nickx_controls', 'yes' ), false ) . '>
+											<samll class="lbl_tc">Only for Self Hosted Video</samll>
+										</td>
+									</tr>
+									</tr>
+									<tr valign="top" ' . ( ( $lic_chk_stateus ) ? '' : 'class="primium_aria" title="AVAILABLE IN PREMIUM VERSION"' ) . '">
+										<th scope="row" class="titledesc"><label for="nickx_preload">Video Preload</label></th>
+										<td class="forminp forminp-checkbox">
+											<input name="nickx_preload" id="nickx_preload" type="checkbox" value="yes" ' . checked( 'yes', get_option( 'nickx_preload', 'yes' ), false ) . '>
 											<samll class="lbl_tc">Only for Self Hosted Video</samll>
 										</td>
 									</tr>
@@ -420,6 +451,8 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 			register_setting( 'wc_product_video_gallery_options', 'nickx_arrowdisable' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_arrow_thumb' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_show_lightbox' );
+			register_setting( 'wc_product_video_gallery_options', 'nickx_lightbox_icon' );
+      register_setting( 'wc_product_video_gallery_options', 'nickx_lightbox_icon_position' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_show_zoom' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_mobile_zoom' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_zoomlevel' );
@@ -439,6 +472,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 				register_setting( 'wc_product_video_gallery_options', 'nickx_videoloop' );
 				register_setting( 'wc_product_video_gallery_options', 'nickx_vid_autoplay' );
 				register_setting( 'wc_product_video_gallery_options', 'nickx_controls' );
+				register_setting( 'wc_product_video_gallery_options', 'nickx_preload' );
 				register_setting( 'wc_product_video_gallery_options', 'nickx_poster_img' );
 				register_setting( 'wc_product_video_gallery_options', 'nickx_place_of_the_video' );
 				register_setting( 'wc_product_video_gallery_options', 'nickx_thumnails_layout' );
