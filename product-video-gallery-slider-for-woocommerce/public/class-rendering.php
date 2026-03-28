@@ -396,7 +396,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 						}
 						$global_thumb = 'global-thumb=" ' . esc_url( $product_video_thumb_urls ).' "';
 					}
-					echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', '<div title="video" class="nswiper-slide nickx-thumbnail video-thumbnail"><div class="video_icon_img" style="background: url( ' . plugins_url( 'css/mejs-controls.svg', __FILE__ ) . ' ) no-repeat;"></div><img ' . $hwstring . ' data-skip-lazy="true" ' . $global_thumb . ' src="' . esc_url( $product_video_thumb_urls ) . '" ' . $custom_thumbnails . ' class="product_video_img img_0 attachment-thumbnail size-thumbnail" alt="video-thumb-0"></div>', '', $product_id );
+					echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', '<div title="video" class="nswiper-slide nickx-thumbnail video-thumbnail"><img ' . $hwstring . ' data-skip-lazy="true" ' . $global_thumb . ' src="' . esc_url( $product_video_thumb_urls ) . '" ' . $custom_thumbnails . ' class="product_video_img img_0 attachment-thumbnail size-thumbnail" alt="video-thumb-0"><svg class="video_icon_img" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="80 35 80 85"><path fill="'.$video_icon_color.'" width="16px" height="16px" d="M140.3 77c.6.2.8.8.6 1.4-.1.3-.3.5-.6.6L110 96.5c-1 .6-1.7.1-1.7-1v-35c0-1.1.8-1.5 1.7-1L140.3 77z"/><path fill="none" stroke="'.$video_icon_color.'" stroke-width="5" d="M82.5 79c0-20.7 16.8-37.5 37.5-37.5s37.5 16.8 37.5 37.5-16.8 37.5-37.5 37.5S82.5 99.7 82.5 79z"/></svg></div>', '', $product_id );
 				}
 			} else {
 				return;

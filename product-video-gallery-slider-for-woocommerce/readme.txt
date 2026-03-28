@@ -3,10 +3,10 @@ Contributors: nikhilgadhiya
 Donate link: https://www.paypal.com/paypalme/NikhilGadhiya
 Tags: product-video,woocommerce-product,video-slider,youtube,woocommerce,
 Requires at least: 5.2.4
-Tested up to: 6.9.1
+Tested up to: 6.9.4
 Requires PHP: 7.4
-Stable tag: 1.5.1.6
-Date: 25/02/2026
+Stable tag: 1.5.1.7
+Date: 28/03/2026
 License: GPLv3 or later License
 URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -92,6 +92,10 @@ This plugin uses the following third-party libraries:
 All external libraries are loaded via their respective CDNs or bundled in the plugin with adherence to their licenses.
 
 == Changelog ==
+
+= 1.5.1.7 =
+* Bug fixes.
+* Tested latest version compatibility.
 
 = 1.5.1.6 =
 * Added a lightbox icon and position change setting
