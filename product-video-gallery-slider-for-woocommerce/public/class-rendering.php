@@ -26,7 +26,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 			add_filter( 'wp_is_mobile', array( $this, 'include_ipad_in_mobile_view') );
 		}
 		public function include_ipad_in_mobile_view( $is_mobile ) {
-			if ( strpos( $_SERVER['HTTP_USER_AGENT'], 'Macintosh') !== false) {
+			if ( isset( $_SERVER['HTTP_USER_AGENT'] ) && strpos( $_SERVER['HTTP_USER_AGENT'], 'Macintosh' ) !== false ) {
 				$is_mobile = true;
 			}
 			return $is_mobile;
@@ -36,15 +36,16 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 				if ( class_exists( 'WooCommerce' ) && is_product() || is_page_template( 'page-templates/template-products.php' ) ) {
 					wp_enqueue_script( 'jquery' );
 					if ( get_option( 'nickx_show_lightbox' ) == 'yes' ) {
-						wp_enqueue_script( 'nickx-nfancybox-js', plugins_url( 'js/jquery.fancybox.js', __FILE__ ), array( 'jquery' ), NICKX_PLUGIN_VERSION, true );
+						wp_enqueue_script( 'nickx-nfancybox-js', plugins_url( 'js/jquery.fancybox.js', __FILE__ ), array( 'jquery' ), NICKX_PLUGIN_VERSION, array( 'in_footer' => true ) );
 						wp_enqueue_style( 'nickx-nfancybox-css', plugins_url( 'css/fancybox.css', __FILE__ ), array(), NICKX_PLUGIN_VERSION, 'all' );
 					}
 					if ( get_option( 'nickx_show_zoom' ) != 'off' ) {
-						wp_enqueue_script( 'nickx-zoom-js', plugins_url( 'js/jquery.zoom.min.js', __FILE__ ), array( 'jquery' ), '1.7.4', true );
-						wp_enqueue_script( 'nickx-elevatezoom-js', plugins_url( 'js/jquery.elevatezoom.min.js', __FILE__ ), array( 'jquery' ), NICKX_PLUGIN_VERSION, true );
+						wp_enqueue_script( 'nickx-zoom-js', plugins_url( 'js/jquery.zoom.min.js', __FILE__ ), array( 'jquery' ), '1.7.4', array( 'in_footer' => true ) );
+						wp_enqueue_script( 'nickx-elevatezoom-js', plugins_url( 'js/jquery.elevatezoom.min.js', __FILE__ ), array( 'jquery' ), NICKX_PLUGIN_VERSION, array( 'in_footer' => true ) );
 					}
 					wp_enqueue_style( 'nickx-swiper-css', plugins_url( 'css/swiper-bundle.min.css', __FILE__ ), array(), NICKX_PLUGIN_VERSION, 'all' );
-					wp_enqueue_style( 'nickx-front-css', plugins_url( 'css/nickx-front.css', __FILE__ ), array('nickx-swiper-css'), NICKX_PLUGIN_VERSION, 'all' );							// Add inline style to set fancybox icon from settings
+					wp_enqueue_style( 'nickx-front-css', plugins_url( 'css/nickx-front.css', __FILE__ ), array('nickx-swiper-css'), NICKX_PLUGIN_VERSION, 'all' );
+					// Add inline style to set fancybox icon from settings
 					$fancybox_icon = get_option( 'nickx_lightbox_icon', 'magnifying-glass-zoom-in.svg' );
 					$icon_url = plugins_url( 'css/' . $fancybox_icon, __FILE__ );
 					// Add background-image and position rules based on settings
@@ -65,12 +66,12 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 					}
 					$custom_css = ".images.nickx_product_images_with_video span.nickx-popup{ background-image: url('" . esc_url( $icon_url ) . "'); }" . $position_css;
 					wp_add_inline_style( 'nickx-front-css', $custom_css );
-					wp_enqueue_script( 'nickx-swiper-js', plugins_url( 'js/swiper-bundle.min.js', __FILE__ ), array( 'jquery' ), NICKX_PLUGIN_VERSION, true );
-					wp_register_script( 'nickx-front-js', plugins_url( 'js/nickx.front.js', __FILE__ ), array( 'jquery', 'nickx-swiper-js' ), NICKX_PLUGIN_VERSION, true );
+					wp_enqueue_script( 'nickx-swiper-js', plugins_url( 'js/swiper-bundle.min.js', __FILE__ ), array( 'jquery' ), NICKX_PLUGIN_VERSION, array( 'in_footer' => true ) );
+					wp_register_script( 'nickx-front-js', plugins_url( 'js/nickx.front.js', __FILE__ ), array( 'jquery', 'nickx-swiper-js' ), NICKX_PLUGIN_VERSION, array( 'in_footer' => true ) );
 					$product_id = get_the_ID();
 					$video_type = get_post_meta( $product_id, '_nickx_product_video_type', true );
 					if( ( is_array( $video_type ) && in_array( 'nickx_video_url_vimeo', get_post_meta( $product_id, '_nickx_product_video_type', true ) ) ) || get_post_meta( $product_id, '_nickx_product_video_type', true ) == 'nickx_video_url_vimeo' ) {
-						wp_enqueue_script( 'nickx-vimeo-js', 'https://player.vimeo.com/api/player.js', '1.0', true, array( 'strategy' => 'defer' ) );
+						wp_enqueue_script( 'nickx-vimeo-js', 'https://player.vimeo.com/api/player.js', array(), '1.0', array( 'strategy' => 'defer', 'in_footer' => true ) );
 					}
 					$nfancybox_options = array(
 						'slideShow' => array( 'speed'=> 3000 ),
@@ -287,7 +288,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 				}
 				echo '<div class="nickx-slider nswiper nickx-slider-for"><div class="nswiper-wrapper">';
 				if ( has_post_thumbnail() || ! empty( $product_video_urls[0] ) ) {
-					$attachment_ids    = ($product) ? $product->get_gallery_image_ids() : '';
+					$attachment_ids    = ($product) ? $product->get_gallery_image_ids() : array();
 					$imgfull_src       = get_the_post_thumbnail_url($product_id,'full');
 					$htmlvideo         = '';
 					if ( ! empty( $product_video_urls ) ) {
@@ -383,10 +384,10 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 						}
 					}
 				} else {
-					$product_video_thumb_urls = $wc_placeholder_img;
+					$product_video_thumb_url = $wc_placeholder_img;
 					$global_thumb = '';
 					if ( $product_video_thumb_ids ) {
-						$product_video_thumb_urls = wp_get_attachment_image_url( $product_video_thumb_ids, $thumbnail_size );
+						$product_video_thumb_url = wp_get_attachment_image_url( $product_video_thumb_ids, $thumbnail_size );
 					} elseif ($custom_icon = get_option( 'custom_icon' ) ) {
 						$custom_thumbnails        = 'custom_thumbnail="yes"';
 						if(is_numeric($custom_icon)){
@@ -394,9 +395,9 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 						} else {
 							$product_video_thumb_url = $custom_icon;
 						}
-						$global_thumb = 'global-thumb=" ' . esc_url( $product_video_thumb_urls ).' "';
+						$global_thumb = 'global-thumb=" ' . esc_url( $product_video_thumb_url ).' "';
 					}
-					echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', '<div title="video" class="nswiper-slide nickx-thumbnail video-thumbnail"><img ' . $hwstring . ' data-skip-lazy="true" ' . $global_thumb . ' src="' . esc_url( $product_video_thumb_urls ) . '" ' . $custom_thumbnails . ' class="product_video_img img_0 attachment-thumbnail size-thumbnail" alt="video-thumb-0"><svg class="video_icon_img" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="80 35 80 85"><path fill="'.$video_icon_color.'" width="16px" height="16px" d="M140.3 77c.6.2.8.8.6 1.4-.1.3-.3.5-.6.6L110 96.5c-1 .6-1.7.1-1.7-1v-35c0-1.1.8-1.5 1.7-1L140.3 77z"/><path fill="none" stroke="'.$video_icon_color.'" stroke-width="5" d="M82.5 79c0-20.7 16.8-37.5 37.5-37.5s37.5 16.8 37.5 37.5-16.8 37.5-37.5 37.5S82.5 99.7 82.5 79z"/></svg></div>', '', $product_id );
+					echo apply_filters( 'woocommerce_single_product_image_thumbnail_html', '<div title="video" class="nswiper-slide nickx-thumbnail video-thumbnail"><img ' . $hwstring . ' data-skip-lazy="true" ' . $global_thumb . ' src="' . esc_url( $product_video_thumb_url ) . '" ' . $custom_thumbnails . ' class="product_video_img img_0 attachment-thumbnail size-thumbnail" alt="video-thumb-0"><svg class="video_icon_img" xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="80 35 80 85"><path fill="'.$video_icon_color.'" width="16px" height="16px" d="M140.3 77c.6.2.8.8.6 1.4-.1.3-.3.5-.6.6L110 96.5c-1 .6-1.7.1-1.7-1v-35c0-1.1.8-1.5 1.7-1L140.3 77z"/><path fill="none" stroke="'.$video_icon_color.'" stroke-width="5" d="M82.5 79c0-20.7 16.8-37.5 37.5-37.5s37.5 16.8 37.5 37.5-16.8 37.5-37.5 37.5S82.5 99.7 82.5 79z"/></svg></div>', '', $product_id );
 				}
 			} else {
 				return;

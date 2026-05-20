@@ -107,14 +107,12 @@ div.overlay-div {
   transform: rotateZ(90deg);
 }
 .nswiper-vertical .nswiper-button-next.thumb_arrow {
-  bottom: -9px;
-  right: 0px;
-  position-area: bottom;
+  bottom: -5px;
+  right: 40%;
 }
 .nswiper-vertical .nswiper-button-prev.thumb_arrow {
-  position-area: top;
-  top: 15px;
-  left: 0;
+  top: 12px;
+  left: 40%;
 }
 .grid div#nickx-gallery .thumb_arrow {
   display: none;
@@ -172,6 +170,9 @@ div.overlay-div {
 .images.nickx_product_images_with_video .fluid-width-video-wrapper {
   padding-top: 100% !important;
 }
+span#product_gallery_shortcode .images.nickx_product_images_with_video {
+  width: 100% !important;
+}
 @media (max-width:767px){
   .nickx_product_images_with_video.yes.v-left,
   .nickx_product_images_with_video.yes.v-right{
@@ -187,20 +188,4 @@ div.overlay-div {
 .woocommerce.woocommerce-page .wp-block-column .images.nickx_product_images_with_video {
   width: 100%;
   float: none;
-}
-@-moz-document url-prefix() {
-  .nswiper-vertical .nswiper-button-prev.thumb_arrow {
-    left: 35% !important;
-  }
-  .nswiper-vertical .nswiper-button-next.thumb_arrow {
-    right: 35% !important;
-  }
-}
-@supports (-webkit-hyphens: none) and (not (-webkit-touch-callout: none)) {
-  .nswiper-vertical .nswiper-button-prev.thumb_arrow {
-    left: 35% !important;
-  }
-  .nswiper-vertical .nswiper-button-next.thumb_arrow {
-    right: 35% !important;
-  }
 }
