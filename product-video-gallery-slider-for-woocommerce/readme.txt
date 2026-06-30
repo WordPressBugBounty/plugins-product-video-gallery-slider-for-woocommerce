@@ -3,10 +3,10 @@ Contributors: nikhilgadhiya
 Donate link: https://www.paypal.com/paypalme/NikhilGadhiya
 Tags: product-video,woocommerce-product,video-slider,youtube,woocommerce,
 Requires at least: 5.2.4
-Tested up to: 6.9.4
+Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 1.5.1.8
-Date: 20/05/2026
+Stable tag: 1.5.1.9
+Date: 30/06/2026
 License: GPLv3 or later License
 URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -92,6 +92,10 @@ This plugin uses the following third-party libraries:
 All external libraries are loaded via their respective CDNs or bundled in the plugin with adherence to their licenses.
 
 == Changelog ==
+
+= 1.5.1.9 =
+* Bug fixes.
+* Tested latest version compatibility.
 
 = 1.5.1.8 =
 * Bug fixes.
@@ -447,3 +451,5 @@ All external libraries are loaded via their respective CDNs or bundled in the pl
 
 = 1.0 =
 Finalized Stable Release.
+
+jihk6sb5rxhshxrptle2coliaqug8ted

@@ -284,9 +284,9 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 										<th scope="row" class="titledesc"><label for="nickx_vid_autoplay">Auto Play Video</label></th>
 										<td class="forminp forminp-checkbox">
 											<input name="nickx_vid_autoplay" id="nickx_vid_autoplay" type="checkbox" value="yes" ' . checked( 'yes', get_option( 'nickx_vid_autoplay' ), false ) . '>
-											<samll>Auto play works only when <b>Place of The Video</b> is <b>Before Product Gallery Images</b>.
-											<p>If you enable this option, the video will be muted by default, so you have to manually unmute the video.</p>
-											<p>Please pass <b>autoplay=1</b> parameter with your video url if you are using YouTube or Vimeo video.</p></samll>
+											<samll>If <b>Place of The Video</b> is set to <b>Before Product Gallery Images</b>, self-hosted videos are muted by default.
+											<p>For YouTube/Vimeo videos, add <b>autoplay=1</b> to the video URL. For all other video placements, no parameter is required.</p></samll>
+
 										</td>
 									</tr>
 									<tr valign="top" ' . ( ( $lic_chk_stateus ) ? '' : 'class="primium_aria" title="AVAILABLE IN PREMIUM VERSION"' ) . '">

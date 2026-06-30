@@ -165,7 +165,7 @@ function playPauseVideo(control){
 						focusableElements: true,
 		    		spaceBetween: 8,
 	    			freeMode: true,
-	      		direction: verticalslider,
+					  direction: verticalslider,
 					});
 				} else {
 					nquery('div#nickx-gallery .nickx-thumbnail').click(function(e){
@@ -216,26 +216,26 @@ function playPauseVideo(control){
 						setTimeout(nickx_set_zoom_img, 100);
 						setTimeout(equalizeThumbHeights, 1000);
 			    }, slideChange: function (nswiper) {
-						setTimeout(nickx_set_zoom_img, 100);
-						playPauseVideo('pause');
-						nickx_set_zoom_img();
-						if( wc_prd_vid_slider_setting.nickx_thumnails_layout == 'grid' ){
-							nquery('div#nickx-gallery .nickx-thumbnail').removeClass('nswiper-slide-thumb-active');
-						}
-						setTimeout(function(e){
-							set_nickx_popup_trigger();
-							if( wc_prd_vid_slider_setting.nickx_thumnails_layout == 'grid' ){
-								let current = nquery('.nswiper-slide.nswiper-slide-active').attr('data-nswiper-slide-index');
-								var active_slide = nquery('div#nickx-gallery .nickx-thumbnail').get(current);
-								nquery(active_slide).addClass('nswiper-slide-thumb-active');
-							}
-							if(wc_prd_vid_slider_setting.nickx_lic && wc_prd_vid_slider_setting.nickx_videoloop == 'yes'){
-								if(nquery('.tc_video_slide.nswiper-slide-active').length > 0){
-									playPauseVideo("play");
-								}
-							}
-						},200);
-					}
+            playPauseVideo('pause');
+            setTimeout(nickx_set_zoom_img, 100);
+            nickx_set_zoom_img();
+            if( wc_prd_vid_slider_setting.nickx_thumnails_layout == 'grid' ){
+              nquery('div#nickx-gallery .nickx-thumbnail').removeClass('nswiper-slide-thumb-active');
+            }
+            setTimeout(function(e){
+              set_nickx_popup_trigger();
+              if( wc_prd_vid_slider_setting.nickx_thumnails_layout == 'grid' ){
+                let current = nquery('.nswiper-slide.nswiper-slide-active').attr('data-nswiper-slide-index');
+                var active_slide = nquery('div#nickx-gallery .nickx-thumbnail').get(current);
+                nquery(active_slide).addClass('nswiper-slide-thumb-active');
+              }
+              if(wc_prd_vid_slider_setting.nickx_lic && ( wc_prd_vid_slider_setting.nickx_videoloop == 'yes' || wc_prd_vid_slider_setting.nickx_vid_autoplay == 'yes' ) ){
+                if(nquery('.tc_video_slide.nswiper-slide-active').length > 0){
+                  playPauseVideo("play");
+                }
+              }
+            },400);
+          }
 			  }
 			});
 			window.slideWrapper = slideWrapper;
