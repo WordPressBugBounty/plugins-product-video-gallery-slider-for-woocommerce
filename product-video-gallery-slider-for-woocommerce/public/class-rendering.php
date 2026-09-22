@@ -535,11 +535,14 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 						$parent_video_types     = get_post_meta( $parent_id, '_nickx_product_video_type', true );
 						$parent_video_thumb_ids = get_post_meta( $parent_id, '_nickx_product_video_thumb_ids', true );
 	
-						$parent_url      = is_array( $parent_video_urls ) && !empty( $parent_video_urls[0] ) ? $parent_video_urls[0] : $parent_video_urls;
-						$parent_type     = is_array( $parent_video_types ) && !empty( $parent_video_types[0] ) ? $parent_video_types[0] : $parent_video_types;
-						$parent_thumb_id = is_array( $parent_video_thumb_ids ) && !empty( $parent_video_thumb_ids[0] ) ? $parent_video_thumb_ids[0] : $parent_video_thumb_ids;
+						$_urls = is_array( $parent_video_urls ) ? array_filter( $parent_video_urls, 'strlen' ) : array();
+						$parent_url      = $_urls ? (string) reset( $_urls ) : ( is_array( $parent_video_urls ) ? '' : (string) $parent_video_urls );
+						$_types = is_array( $parent_video_types ) ? array_filter( $parent_video_types, 'strlen' ) : array();
+						$parent_type     = $_types ? (string) reset( $_types ) : ( is_array( $parent_video_types ) ? '' : (string) $parent_video_types );
+						$_thumbs = is_array( $parent_video_thumb_ids ) ? array_filter( $parent_video_thumb_ids, 'strlen' ) : array();
+						$parent_thumb_id = $_thumbs ? (string) reset( $_thumbs ) : ( is_array( $parent_video_thumb_ids ) ? '' : (string) $parent_video_thumb_ids );
 	
-						if ( ! empty( $parent_url ) ) {
+						if ( ! empty( $parent_url ) && is_string( $parent_url ) ) {
 							$parent_thumb_url = '';
 							if ( ! empty( $parent_thumb_id ) ) {
 								$thumbnail_size    = apply_filters( 'woocommerce_gallery_thumbnail_size', 'woocommerce_gallery_thumbnail' );

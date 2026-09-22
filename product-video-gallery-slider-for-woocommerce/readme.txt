@@ -5,7 +5,7 @@ Tags: product-video,woocommerce-product,video-slider,youtube,woocommerce
 Requires at least: 5.2.4
 Tested up to: 7.1.2
 Requires PHP: 7.4
-Stable tag: 1.5.2.0
+Stable tag: 1.5.2.2
 Date: 22/09/2026
 License: GPLv3 or later License
 URI: http://www.gnu.org/licenses/gpl-3.0.html
@@ -84,6 +84,9 @@ For adding a video to your product : open edit product page and insert your prod
 
 
 == Changelog ==
+
+= 1.5.2.2 =
+* Bug fixes.
 
 = 1.5.2.0 =
 * Removed the Swiper.js dependency and implemented our own slider engine.
