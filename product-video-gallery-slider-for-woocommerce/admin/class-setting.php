@@ -141,8 +141,8 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 										<td class="forminp forminp-checkbox">
 											<img style="max-width:80px;max-height:80px;" id="custom_video_thumb" src="' . esc_url( wp_get_attachment_image_url( get_option( 'custom_icon' ), 'thumbnail' ) ) . '">
 											<input type="hidden" name="custom_icon" id="custom_icon" value="' . esc_attr( get_option( 'custom_icon' ) ) . '"/>
-											<lable type="submit" class="upload_image_button button">Select Thumbnail</lable>
-											<lable type="submit" class="remove_image_button button">X</lable>
+											<label type="submit" class="upload_image_button button">Select Thumbnail</label>
+											<label type="submit" class="remove_image_button button">X</label>
 										</td>
 									</tr>
 									<tr valign="top">
@@ -241,6 +241,13 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 										<td class="forminp forminp-checkbox">
 											<input name="nickx_adaptive_height" id="nickx_adaptive_height" type="checkbox" value="yes" ' . checked( 'yes', get_option( 'nickx_adaptive_height', 'yes' ), false ) . '>
 											<samll class="lbl_tc">Slider height based on images automatically.</samll>
+										</td>
+									</tr>
+									<tr valign="top">
+										<th scope="row" class="titledesc"><label for="nickx_variation_gallery">Variation Gallery</label></th>
+										<td class="forminp forminp-checkbox">
+											<input name="nickx_variation_gallery" id="nickx_variation_gallery" type="checkbox" value="yes" ' . checked( 'yes', get_option( 'nickx_variation_gallery', 'no' ), false ) . '>
+											<samll class="lbl_tc">By default WooCommerce provides multiple images option for variation. If you are using an older WooCommerce version and don\'t have the option to upload multiple images in variation, then enable this setting, or if you don\'t want to use the default WooCommerce image select feature.</samll>
 										</td>
 									</tr>
 									<tr valign="top" ' . ( ( $lic_chk_stateus ) ? '' : 'class="primium_aria" title="AVAILABLE IN PREMIUM VERSION"' ) . '">
@@ -364,7 +371,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 				echo '<form method="POST">';
 						wp_nonce_field( 'nickx-license-deactive' );
 						echo '<div class="col-50">
-						<h2> Thank You Phurchasing ...!!!</h2>
+						<h2>Thank You For Purchasing...!!!</h2>
 						<h4 class="paid_color">Deactivate Your License:</h4>
 						<p class="submit">
 							<input type="submit" name="deactivate_techno_wc_product_video_license" value="Deactive" class="button button-primary">
@@ -429,6 +436,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 				<p class="paid_color">04. Video Looping (Looping a video is allowing the video to play in a repeat mode).</p>
 				<p class="paid_color">05. Show Only Videos (Display only videos on gallery).</p>
 				<p class="paid_color">06. Shortcode (Use shortcode if your product pages edited with help of any page builders <b>Divi Builder, Elementor Builder etc.</b>).</p>
+				<p class="paid_color">07. Product Variation Video (Add unique YouTube, Vimeo, or HTML5 MP4 video and custom gallery for each product variation).</p>
 				<p><label for="techno_wc_product_videokey">License Key : </label><input class="regular-text" type="text" id="techno_wc_product_video_license_key" name="techno_wc_product_video_license_key"></p>
 				<p class="submit">
 				<input type="submit" name="activate_license_techno" value="Activate" class="button button-primary">
@@ -452,7 +460,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 			register_setting( 'wc_product_video_gallery_options', 'nickx_arrow_thumb' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_show_lightbox' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_lightbox_icon' );
-      register_setting( 'wc_product_video_gallery_options', 'nickx_lightbox_icon_position' );
+			register_setting( 'wc_product_video_gallery_options', 'nickx_lightbox_icon_position' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_show_zoom' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_mobile_zoom' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_zoomlevel' );
@@ -468,6 +476,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 			register_setting( 'wc_product_video_gallery_options', 'nickx_arrowbgcolor' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_video_icon_color' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_adaptive_height' );
+			register_setting( 'wc_product_video_gallery_options', 'nickx_variation_gallery' );
 			if ( $this->extend->is_nickx_act_lic() ) {
 				register_setting( 'wc_product_video_gallery_options', 'nickx_videoloop' );
 				register_setting( 'wc_product_video_gallery_options', 'nickx_vid_autoplay' );

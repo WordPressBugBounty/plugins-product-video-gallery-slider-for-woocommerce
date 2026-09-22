@@ -20,9 +20,11 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_VIDEO_FIELD' ) ) {
 			add_action( 'save_post', array( $this, 'save_wc_video_url_field' ) );
 			if( function_exists( 'dokan' ) ){
 				add_action( 'dokan_product_updated', array( $this, 'save_wc_video_url_field' ) );
-				add_action( 'dokan_product_updated', array( $this, 'save_wc_video_url_field' ) );
 				add_action( 'dokan_product_edit_after_product_tags', array( $this, 'video_url_field_dokan' ) );
 			}
+			add_action( 'woocommerce_product_after_variable_attributes', array( $this, 'add_variation_fields' ), 10, 3 );
+			add_action( 'woocommerce_save_product_variation', array( $this, 'save_variation_fields' ), 10, 2 );
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_admin_variation_scripts' ) );
 		}
 		public function add_video_url_field() {
 			add_meta_box( 'video_url', 'Product Video Url', array( $this, 'video_url_field' ), 'product' );
@@ -83,7 +85,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_VIDEO_FIELD' ) ) {
 								<div class="video_thumbnail_btn">
 									<label class="select_video_thumb_button button">Select Video Thumbnail</label>
 									<input type="hidden" value="' . esc_attr( $product_video_thumb_id ) . '" name="product_video_thumb_url[]" class="product_video_thumb_url">
-									<lable type="submit" class="remove_image_button button">X</lable>
+									<label type="submit" class="remove_image_button button">X</label>
 								</div>
 							</div>
 						</div>
@@ -103,7 +105,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_VIDEO_FIELD' ) ) {
 								</div>
 								<div class="video_schema_aria">
 									<label class="nickx_lbl_schema">Video Description</label>
-									<textarea name="nickx_video_description[]" rows="2" cols="20">' . $video_description . '</textarea><small>The description of the video.</small>
+									<textarea name="nickx_video_description[]" rows="2" cols="20">' . esc_textarea( $video_description ) . '</textarea><small>The description of the video.</small>
 								</div>
 							</div>
 						</div>
@@ -243,7 +245,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_VIDEO_FIELD' ) ) {
 						$(this).parents('tr').remove();
 					});
 					$(document).on('click','.product_videos_tbl .add_video', function(e){
-						const html = '<tr><td colspan="2"><div class="video_url_aria"><div><label class="nickx_lbl nickx_product_video_type_lbl" for="nickx_product_video_type">Video Type</label><select name="nickx_product_video_type[]" class="nickx_input"><option value="nickx_video_url_youtube">Youtube Video</option><option value="nickx_video_url_vimeo">Vimeo Video</option><option value="nickx_video_url_local">Self Hosted Video(MP4, WebM, and Ogg)</option><option value="nickx_video_url_iframe">Other (embedUrl)</option></select></div><div style="display: inline-block;"><div style="display: inline-block; vertical-align: top;"><label class="nickx_lbl" for="nickx_video_text_urls">Video Url</label></div><div style="display: inline-block;"><div><input type="url" class="nickx_input nickx_video_text_urls" name="nickx_video_text_url[]" placeholder="URL of your video"><span><label style="display: none;" class="select_video_button button">Select Video</label><input type="hidden" name="video_attachment_id" id="video_attachment_id"></span></div><div><small style="display: none;" class="nickx_url_info nickx_video_url_youtube">https://www.youtube.com/embed/.....</small><small style="display: none;" class="nickx_url_info nickx_video_url_vimeo">https://player.vimeo.com/video/......</small><small style="display: none;" class="nickx_url_info nickx_video_url_local">./wp-content/upload/......</small><small style="display: none;" class="nickx_url_info nickx_video_url_iframe">Your embed video url.</small></div></div></div><div><div><input type="checkbox" class="custom_thumbnail" value="yes"><input type="hidden" value="no" name="custom_thumbnail[]"><label class="nickx_tab" for="custom_thumbnail">Use Custom video Thumbnail?</label></div><div class="select_video_thumbnail" style="display:none;"><div class="video_thumbnail_aria"><img style="max-width:80px;max-height:80px;" class="product_video_thumb"></div><div class="video_thumbnail_btn"><label class="select_video_thumb_button button">Select Video Thumbnail</label><input type="hidden" name="product_video_thumb_url[]" class="product_video_thumb_url"><lable type="submit" class="remove_image_button button">X</lable></div></div></div></div><div class="video_delete_aria"><b class="button video-remove-btn" title="Remove Video"><span class="dashicons dashicons-remove"></span></b></div></td></tr>';
+						const html = '<tr><td colspan="2"><div class="video_url_aria"><div><label class="nickx_lbl nickx_product_video_type_lbl" for="nickx_product_video_type">Video Type</label><select name="nickx_product_video_type[]" class="nickx_input"><option value="nickx_video_url_youtube">Youtube Video</option><option value="nickx_video_url_vimeo">Vimeo Video</option><option value="nickx_video_url_local">Self Hosted Video(MP4, WebM, and Ogg)</option><option value="nickx_video_url_iframe">Other (embedUrl)</option></select></div><div style="display: inline-block;"><div style="display: inline-block; vertical-align: top;"><label class="nickx_lbl" for="nickx_video_text_urls">Video Url</label></div><div style="display: inline-block;"><div><input type="url" class="nickx_input nickx_video_text_urls" name="nickx_video_text_url[]" placeholder="URL of your video"><span><label style="display: none;" class="select_video_button button">Select Video</label><input type="hidden" name="video_attachment_id" id="video_attachment_id"></span></div><div><small style="display: none;" class="nickx_url_info nickx_video_url_youtube">https://www.youtube.com/embed/.....</small><small style="display: none;" class="nickx_url_info nickx_video_url_vimeo">https://player.vimeo.com/video/......</small><small style="display: none;" class="nickx_url_info nickx_video_url_local">./wp-content/upload/......</small><small style="display: none;" class="nickx_url_info nickx_video_url_iframe">Your embed video url.</small></div></div></div><div><div><input type="checkbox" class="custom_thumbnail" value="yes"><input type="hidden" value="no" name="custom_thumbnail[]"><label class="nickx_tab" for="custom_thumbnail">Use Custom video Thumbnail?</label></div><div class="select_video_thumbnail" style="display:none;"><div class="video_thumbnail_aria"><img style="max-width:80px;max-height:80px;" class="product_video_thumb"></div><div class="video_thumbnail_btn"><label class="select_video_thumb_button button">Select Video Thumbnail</label><input type="hidden" name="product_video_thumb_url[]" class="product_video_thumb_url"><label type="submit" class="remove_image_button button">X</label></div></div></div></div><div class="video_delete_aria"><b class="button video-remove-btn" title="Remove Video"><span class="dashicons dashicons-remove"></span></b></div></td></tr>';
 						$('.product_videos_tbl tbody').append(html);
 					});
 				});
@@ -291,6 +293,12 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_VIDEO_FIELD' ) ) {
 			}
 		}
 		public function save_wc_video_url_field( $post_id ) {
+			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+				return;
+			}
+			if ( ! current_user_can( 'edit_post', $post_id ) ) {
+				return;
+			}
 			$nonce_name   = isset( $_POST['nickx_video_url_nonce'] ) ? $_POST['nickx_video_url_nonce'] : '';
 			$nonce_action = 'nickx_video_url_nonce_action';
 			if ( ! wp_verify_nonce( $nonce_name, $nonce_action ) ) {
@@ -335,6 +343,108 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_VIDEO_FIELD' ) ) {
 				update_post_meta( $post_id, '_nickx_video_description', array_map( 'sanitize_textarea_field', $_POST['nickx_video_description'] ) );
 			} else {
 				delete_post_meta( $post_id, '_nickx_video_description' );
+			}
+		}
+
+		public function enqueue_admin_variation_scripts( $hook ) {
+			if ( in_array( $hook, array( 'post.php', 'post-new.php' ), true ) ) {
+				$screen = get_current_screen();
+				if ( $screen && 'product' === $screen->post_type ) {
+					wp_enqueue_media();
+					wp_enqueue_script( 'jquery-ui-sortable' );
+					wp_enqueue_script( 'nickx-variation-admin', plugins_url( 'js/variation-admin.js', __FILE__ ), array( 'jquery', 'jquery-ui-sortable' ), NICKX_PLUGIN_VERSION, true );
+					wp_enqueue_style( 'nickx-variation-admin-css', plugins_url( 'css/variation-admin.css', __FILE__ ), array(), NICKX_PLUGIN_VERSION );
+				}
+			}
+		}
+
+		public function add_variation_fields( $loop, $variation_data, $variation ) {
+			$is_act_lic  = $this->extend->is_nickx_act_lic();
+			$variation_id = $variation->ID;
+
+			$video_url   = get_post_meta( $variation_id, '_nickx_variation_video_url', true );
+			$video_file  = get_post_meta( $variation_id, '_nickx_variation_video_file', true );
+			$gallery_ids = get_post_meta( $variation_id, '_product_image_gallery', true );
+
+			echo '<div class="options_group nickx_variation_video_section">';
+			echo '<p class="form-row form-row-full"><strong>' . esc_html__( 'Product Video & Variation Gallery', 'product-video-gallery-slider-for-woocommerce' ) . '</strong></p>';
+
+			echo '<div class="nickx-variation-video-group ' . ( $is_act_lic ? '' : 'nickx-variation-locked' ) . '">';
+
+			if ( ! $is_act_lic ) {
+				echo '<div class="nickx-variation-premium-notice">';
+				echo '<span>' . esc_html__( 'Variation Video Support is available in the ', 'product-video-gallery-slider-for-woocommerce' ) . '</span>';
+				echo '<a href="' . esc_url( admin_url( 'edit.php?post_type=product&page=wc-product-video' ) ) . '">' . esc_html__( 'Premium Version. Activate License', 'product-video-gallery-slider-for-woocommerce' ) . ' &rarr;</a>';
+				echo '</div>';
+			} else {
+				// Video URL
+				woocommerce_wp_text_input( array(
+					'id'          => 'nickx_variation_video_url_' . $variation_id,
+					'name'        => 'nickx_variation_video_url_' . $variation_id,
+					'label'       => __( 'Video URL (YouTube/Vimeo/MP4)', 'product-video-gallery-slider-for-woocommerce' ),
+					'value'       => $video_url,
+					'desc_tip'    => true,
+					'description' => __( 'Enter YouTube, Vimeo, or self-hosted video URL for this variation.', 'product-video-gallery-slider-for-woocommerce' ),
+				) );	
+				// Self-hosted video upload
+				echo '<div class="form-field video_aria" data-loop="' . esc_attr( $variation_id ) . '">';
+				echo '<label>' . __( 'Upload Video (MP4)', 'product-video-gallery-slider-for-woocommerce' ) . '</label>';
+				echo '<input type="hidden" class="variation_video_file" name="nickx_variation_video_file_' . $variation_id . '" value="' . esc_attr( $video_file ) . '"/>';
+				echo '<button type="button" class="button upload_video_button">' . __( 'Upload Video', 'product-video-gallery-slider-for-woocommerce' ) . '</button>';
+				echo '<div class="video-preview">';
+				if ( !empty($video_file) ) {
+					echo '<video width="120" controls><source src="' . esc_url( $video_url ) . '" type="video/mp4"></video>';
+					echo '<span class="remove-video">&times;</span>';
+				}
+				echo '</div></div>';
+			}
+			echo '</div>';
+			if ( get_option( 'nickx_variation_gallery', 'no' ) == 'yes' ) {
+				echo '<div class="form-field nickx-variation-gallery-group">';
+				echo '<label>' . __( 'Variation Gallery Images', 'product-video-gallery-slider-for-woocommerce' ) . '</label>';
+				echo '<input type="hidden" class="variation_gallery_ids" name="nickx_variation_gallery_ids_' . $variation_id . '" value="' . esc_attr( $gallery_ids ) . '"/>';
+				echo '<button type="button" class="button upload_gallery_button">' . __( 'Upload Images', 'product-video-gallery-slider-for-woocommerce' ) . '</button>';
+				echo '<div class="variation-media-preview" data-loop="' . esc_attr( $variation_id ) . '">';
+				if ( $gallery_ids ) {
+					$ids = explode( ',', $gallery_ids );
+					foreach ( $ids as $id ) {
+						$id = trim( $id );
+						if ( $id ) {
+							$url = wp_get_attachment_url( $id );
+							if ( $url ) {
+								echo '<div class="media-thumb" data-id="' . esc_attr( $id ) . '">';
+								echo '<img src="' . esc_url( $url ) . '" />';
+								echo '<span class="remove-media">&times;</span>';
+								echo '</div>';
+							}
+						}
+					}
+				}
+				echo '</div></div>';
+			}
+			echo '</div>';
+		}
+		public function save_variation_fields( $variation_id, $i ) {
+			if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+				return;
+			}
+			if ( ! current_user_can( 'edit_post', $variation_id ) ) {
+				return;
+			}
+			if ( isset( $_POST['security'] ) && ! wp_verify_nonce( $_POST['security'], 'save-variations' ) ) {
+				return;
+			}
+			if ( isset( $_POST['nickx_variation_gallery_ids_' . $variation_id] ) ) {
+				update_post_meta( $variation_id, '_product_image_gallery', sanitize_text_field( $_POST['nickx_variation_gallery_ids_' . $variation_id] ) );
+			}
+			$is_act_lic = $this->extend->is_nickx_act_lic();
+			if ( $is_act_lic ) {
+				if ( isset( $_POST['nickx_variation_video_url_' . $variation_id] ) ) {
+					update_post_meta( $variation_id, '_nickx_variation_video_url', esc_url_raw( $_POST['nickx_variation_video_url_' . $variation_id] ) );
+				}
+				if ( isset( $_POST['nickx_variation_video_file_' . $variation_id] ) ) {
+					update_post_meta( $variation_id, '_nickx_variation_video_file', sanitize_text_field( $_POST['nickx_variation_video_file_' . $variation_id] ) );
+				}
 			}
 		}
 	}

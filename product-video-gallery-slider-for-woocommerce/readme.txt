@@ -1,12 +1,12 @@
-﻿=== Product Video Gallery for Woocommerce ===
+=== Product Video Gallery for Woocommerce ===
 Contributors: nikhilgadhiya
 Donate link: https://www.paypal.com/paypalme/NikhilGadhiya
-Tags: product-video,woocommerce-product,video-slider,youtube,woocommerce,
+Tags: product-video,woocommerce-product,video-slider,youtube,woocommerce
 Requires at least: 5.2.4
-Tested up to: 7.0
+Tested up to: 7.1.2
 Requires PHP: 7.4
-Stable tag: 1.5.1.9
-Date: 30/06/2026
+Stable tag: 1.5.2.0
+Date: 22/09/2026
 License: GPLv3 or later License
 URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -39,6 +39,7 @@ Product details page will show that gallery video.
 06. Show Only Videos (Display only videos on gallery).
 07. Grid layout for thumbnails.
 08. Shortcode **[product_gallery_shortcode]** (Use shortcode if your product pages edited with help of any page builders **Divi Builder, Elementor Builder etc.**).
+09. Product Variation Video (Add unique video - YouTube, Vimeo, or HTML5 MP4 - and custom gallery for each product variation).
 [Buy Premium](https://www.technosoftwebs.com/wc-product-video-gallery/) 
 Before buying the paid plugin please make sure free version of our plugin works great. So you have an idea about the features of plugins and how it will works.
 
@@ -81,17 +82,14 @@ For adding a video to your product : open edit product page and insert your prod
 8. Premium Features.
 9. Premium Features.
 
-== Third Party Libraries/Resources == 
-
-This plugin uses the following third-party libraries:
-
-1. [Swiper](https://swiperjs.com/)  
-   License: [MIT License](https://opensource.org/licenses/MIT)
-
-
-All external libraries are loaded via their respective CDNs or bundled in the plugin with adherence to their licenses.
 
 == Changelog ==
+
+= 1.5.2.0 =
+* Removed the Swiper.js dependency and implemented our own slider engine.
+* Added support for WooCommerce variation galleries.
+* Fixed various bugs and improved overall functionality.
+* Tested compatibility with the latest versions of WordPress and WooCommerce.
 
 = 1.5.1.9 =
 * Bug fixes.

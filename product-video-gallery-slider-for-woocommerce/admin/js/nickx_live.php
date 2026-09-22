@@ -1,5 +1,4 @@
 <?php
-ob_start();
 class NICKX_LIC_CLASS {
 	public $err;
 	private $wp_option = 'nickx_wp_plugin';
@@ -50,10 +49,10 @@ class NICKX_LIC_CLASS {
 		$nickx_lic = get_option( $this->wp_option );
 		$nickx_lic = unserialize( base64_decode( $nickx_lic ) );
 		$deact_url = NICKX_PLUGIN_URL . '?slm_action=slm_deactivate&license_key=' . $nickx_lic['l'] . '&registered_domain=' . $site_url;
-		$response  = wp_remote_get( $deact_url, array( 'timeout' => 20, 'sslverify' => false ) );
-		if ( is_array( $response ) ) {
-			$json = preg_replace( '/[\x00-\x1F\x80-\xFF]/', '', utf8_encode( $response['body'] ) );
-			$nickx_res_data = json_decode( $json );
+		$nickx_res  = wp_remote_get( $deact_url, array( 'timeout' => 20, 'sslverify' => false ) );
+		if ( is_array( $nickx_res ) ) {
+			$nickx_res = wp_remote_retrieve_body( $nickx_res );
+			$nickx_res_data = json_decode( $nickx_res );
 			delete_option( $this->wp_option );
 			if ( $nickx_res_data->result == 'success' ) {
 				return true;

@@ -24,6 +24,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 			add_shortcode( 'product_gallery_shortcode', array( $this, 'product_gallery_shortcode_callback' ) );
 			add_filter( 'wc_get_template', array( $this, 'nickx_get_template' ), 99, 5 );
 			add_filter( 'wp_is_mobile', array( $this, 'include_ipad_in_mobile_view') );
+			add_filter( 'woocommerce_available_variation', array( $this, 'load_variation_media' ), 10, 3 );
 		}
 		public function include_ipad_in_mobile_view( $is_mobile ) {
 			if ( ! is_product() ) {
@@ -47,8 +48,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 						wp_enqueue_script( 'nickx-zoom-js', plugins_url( 'js/jquery.zoom.min.js', __FILE__ ), array( 'jquery' ), '1.7.4', array( 'in_footer' => true ) );
 						wp_enqueue_script( 'nickx-elevatezoom-js', plugins_url( 'js/jquery.elevatezoom.min.js', __FILE__ ), array( 'jquery' ), NICKX_PLUGIN_VERSION, array( 'in_footer' => true ) );
 					}
-					wp_enqueue_style( 'nickx-swiper-css', plugins_url( 'css/swiper-bundle.min.css', __FILE__ ), array(), NICKX_PLUGIN_VERSION, 'all' );
-					wp_enqueue_style( 'nickx-front-css', plugins_url( 'css/nickx-front.css', __FILE__ ), array('nickx-swiper-css'), NICKX_PLUGIN_VERSION, 'all' );
+					wp_enqueue_style( 'nickx-front-css', plugins_url( 'css/nickx-front.css', __FILE__ ), array(), NICKX_PLUGIN_VERSION, 'all' );
 					// Add inline style to set fancybox icon from settings
 					$fancybox_icon = get_option( 'nickx_lightbox_icon', 'magnifying-glass-zoom-in.svg' );
 					$icon_url = plugins_url( 'css/' . $fancybox_icon, __FILE__ );
@@ -94,6 +94,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 						'nickx_rtl'                => is_rtl(),
 						'nickx_arrowinfinite'      => get_option( 'nickx_arrowinfinite' ),
 						'nickx_arrowdisable'       => get_option( 'nickx_arrowdisable' ),
+						'nickx_arrow_thumb'        => get_option( 'nickx_arrow_thumb' ),
 						'nickx_hide_thumbnails'    => get_option( 'nickx_hide_thumbnails' ),
 						'nickx_hide_thumbnail'     => get_option( 'nickx_hide_thumbnail' ),
 						'nickx_adaptive_height'    => get_option( 'nickx_adaptive_height', 'yes' ),
@@ -104,17 +105,30 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 						'nickx_zoomlevel'          => get_option( 'nickx_zoomlevel', 1 ),
 						'nickx_arrowcolor'         => get_option( 'nickx_arrowcolor' ),
 						'nickx_arrowbgcolor'       => get_option( 'nickx_arrowbgcolor' ),
+						'nickx_video_icon_color'   => get_option( 'nickx_video_icon_color', '#FFF' ),
 						'nickx_variation_selector' => apply_filters( 'nickx_variation_selector', 'document'),
 						'nickx_lic'                => $this->extend->is_nickx_act_lic(),
 						'nfancybox'                => apply_filters( 'nickx_nfancybox_options', $nfancybox_options ),
 					);
+					if ( $custom_icon = get_option( 'custom_icon' ) ) {
+						if ( is_numeric( $custom_icon ) ) {
+							$translation_array['custom_icon'] = wp_get_attachment_image_url( $custom_icon, 'thumbnail' );
+						} else {
+							$translation_array['custom_icon'] = $custom_icon;
+						}
+					}
 					if ( $this->extend->is_nickx_act_lic() ) {
 						$translation_array['nickx_place_of_the_video'] = get_option( 'nickx_place_of_the_video' );
 						$translation_array['nickx_videoloop']          = get_option( 'nickx_videoloop' );
 						$translation_array['nickx_vid_autoplay']       = get_option( 'nickx_vid_autoplay' );
+						$translation_array['nickx_controls']           = get_option( 'nickx_controls', 'yes' );
+						$translation_array['nickx_preload']            = get_option( 'nickx_preload', 'yes' );
+						$translation_array['nickx_poster_img']         = get_option( 'nickx_poster_img' );
+						$translation_array['nickx_show_only_video']     = get_option( 'nickx_show_only_video' );
 					}
 					wp_localize_script( 'nickx-front-js', 'wc_prd_vid_slider_setting', $translation_array );
 					wp_enqueue_script( 'nickx-front-js' );
+					wp_enqueue_script( 'nickx-variation-js', plugins_url( 'js/nickx.variation.js', __FILE__ ), array( 'jquery', 'nickx-front-js' ), NICKX_PLUGIN_VERSION, array( 'in_footer' => true ) );
 				}
 			}
 		}
@@ -144,13 +158,35 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 				if( strpos($url, "nocookie" ) ){
 					$nocookie = '-nocookie';   
 				}
-				$url = 'https://www.youtube'.$nocookie.'.com/embed/' . $matches[2] . '?rel=0&showinfo=0&enablejsapi=1';
+				$url = 'https://www.youtube'.$nocookie.'.com/embed/' . $matches[2] . '?enablejsapi=1';
+				if ( get_option( 'nickx_vid_autoplay' ) == 'yes' && get_option( 'nickx_place_of_the_video' ) == 'yes' ) {
+					$url .= '&autoplay=1&mute=1';
+				}
 				if( !empty( $query_string ) ){
 					parse_str($query_string, $yt_params);
-					unset($yt_params['v']);
-					$query_string = http_build_query($yt_params);
-					$url .= '&'.$query_string;
+					unset($yt_params['v'], $yt_params['autoplay'], $yt_params['mute']);
+					if (!empty($yt_params)) {
+						$url .= '&'.http_build_query($yt_params);
+					}
 				}
+			}
+			return $url;
+		}
+		function nickx_get_embed_vimeo_url( $url ) {
+			if ( preg_match( '/(?:player\.)?vimeo\.com\/(?:video\/)?(\d+)/i', $url, $matches ) ) {
+				$player_url = 'https://player.vimeo.com/video/' . $matches[1] . '?api=1';
+				if ( get_option( 'nickx_vid_autoplay' ) == 'yes' && get_option( 'nickx_place_of_the_video' ) == 'yes' ) {
+					$player_url .= '&autoplay=1&muted=1';
+				}
+				$parsed_url = wp_parse_url( $url );
+				if ( ! empty( $parsed_url['query'] ) ) {
+					parse_str( $parsed_url['query'], $query_params );
+					unset( $query_params['api'], $query_params['autoplay'], $query_params['muted'] );
+					if ( ! empty( $query_params ) ) {
+						$player_url .= '&' . http_build_query( $query_params );
+					}
+				}
+				$url = $player_url;
 			}
 			return $url;
 		}
@@ -219,18 +255,17 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 								if ( ! empty( $video_thumb_ids[$key] ) ) {
 									$product_video_thumb_url = wp_get_attachment_image_url( $video_thumb_ids[$key] );
 								}
-								echo '<script type="application/ld+json">
-								{
-								  "@context": "https://schema.org/",
-								  "@type": "VideoObject",
-								  "uploadDate": "' . $video_upload_dates[$key] . ':00'.$this->nickx_get_gmt_offset().'",
-								  "thumbnailUrl" : "' . $product_video_thumb_url . '",
-								  "name": "' . $video_names[$key] . '",
-								  "description" : "' . $video_descriptions[$key] . '",
-								  "@id": "' . $product_video_url . '",
-								  "embedUrl" : "' . $product_video_url . '"	  
-								}
-								</script>';
+								$schema_data = array(
+									'@context'     => 'https://schema.org/',
+									'@type'        => 'VideoObject',
+									'uploadDate'   => $video_upload_dates[$key] . ':00' . $this->nickx_get_gmt_offset(),
+									'thumbnailUrl' => $product_video_thumb_url,
+									'name'         => $video_names[$key],
+									'description'  => $video_descriptions[$key],
+									'@id'          => $product_video_url,
+									'embedUrl'     => $product_video_url,
+								);
+								echo '<script type="application/ld+json">' . wp_json_encode( $schema_data ) . '</script>';
 							}
 							if(!$extend->is_nickx_act_lic()){
 								break;
@@ -241,31 +276,22 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 			}
 		}
 		public function nickx_get_nickx_video_html( $product_video_url, $extend, $key = 1, $product_video_type = 'nickx_video_url_youtube', $product_video_thumb_id = '', $nickx_preload = 'auto' ) {
+			$is_shorts = ( strpos( $product_video_url, 'shorts' ) !== false ) ? ' data-shorts="yes" data-ratio="1.7777" ' : '';
 			if ( strpos( $product_video_url, 'youtube' ) > 0 || strpos( $product_video_url, 'youtu' ) > 0 ) {
 				$product_video_url = $this->nickx_get_embed_yt_url( $product_video_url );
-				return '<div class="tc_video_slide nswiper-slide"><iframe id="nickx_yt_video_'.$key.'" loading="lazy" width="100%" height="100%" class="product_video_iframe fitvidsignore" video-type="youtube" src="' . esc_url( $product_video_url ) . '" frameborder="0" allow="autoplay; accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe><span class="product_video_iframe_light nickx-popup nfancybox-media" data-nfancybox="product-gallery"></span></div>';
+				return '<div class="tc_video_slide nswiper-slide"><iframe id="nickx_yt_video_'.$key.'" '.$is_shorts.' loading="lazy" width="100%" height="100%" class="product_video_iframe fitvidsignore" video-type="youtube" src="' . esc_url( $product_video_url ) . '" frameborder="0" allow="autoplay; accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe><span class="product_video_iframe_light nickx-popup nfancybox-media" data-nfancybox="product-gallery"></span></div>';
 			} elseif ( strpos( $product_video_url, 'vimeo' ) > 0 && $extend->is_nickx_act_lic() ) {
-				if ( preg_match( '/(?:player\.)?vimeo\.com\/(?:video\/)?(\d+)/i', $product_video_url, $matches ) ) {
-					$player_url = 'https://player.vimeo.com/video/' . $matches[1];
-					$parsed_url = wp_parse_url( $product_video_url );
-					if ( ! empty( $parsed_url['query'] ) ) {
-						parse_str( $parsed_url['query'], $query_params );
-						if ( ! empty( $query_params ) ) {
-							$player_url .= '?' . http_build_query( $query_params );
-						}
-					}
-					$product_video_url = $player_url;
-				}
-				return '<div class="tc_video_slide nswiper-slide"><iframe style="display:none;" width="100%" loading="lazy" height="450px" class="product_video_iframe fitvidsignore" video-type="vimeo" src="' . esc_url( $product_video_url ) . '" frameborder="0" allow="autoplay; fullscreen" allowfullscreen=""></iframe><span href="' . esc_url( $product_video_url ) . '?enablejsapi=1&wmode=opaque" class="nickx-popup nfancybox-media" data-nfancybox="product-gallery"></span></div>';
+				$product_video_url = $this->nickx_get_embed_vimeo_url( $product_video_url );
+				return '<div class="tc_video_slide nswiper-slide"><iframe width="100%" loading="lazy" height="100%" class="product_video_iframe fitvidsignore" video-type="vimeo" src="' . esc_url( $product_video_url ) . '" frameborder="0" allow="autoplay; fullscreen" allowfullscreen=""></iframe><span href="' . esc_url( $product_video_url ) . '?enablejsapi=1&wmode=opaque" class="nickx-popup nfancybox-media" data-nfancybox="product-gallery"></span></div>';
 			} elseif ( ( $product_video_type == 'nickx_video_url_local' || strpos( $product_video_url, $_SERVER['SERVER_NAME'] ) > 0 ) && $extend->is_nickx_act_lic() ) {
 				if ( $product_video_thumb_id ) {
-					$poster = 'poster="'.wp_get_attachment_image_url( $product_video_thumb_id, 'full' ).'"';
+					$poster = 'poster="'.esc_url( wp_get_attachment_image_url( $product_video_thumb_id, 'full' ) ).'"';
 				}
-				return '<div class="tc_video_slide nswiper-slide"><video '. ( $poster ?? '' ) .' width="100%" height="100%" preload="'.$nickx_preload.'" class="product_video_iframe fitvidsignore" video-type="html5" ' . ( ( get_option( 'nickx_controls' ) == 'yes' ) ? 'controls' : '' ) . ' ' . ( ( get_option( 'nickx_vid_autoplay' ) == 'yes' && get_option( 'nickx_place_of_the_video' ) == 'yes' ) ? 'autoplay muted' : '' ) . ' playsinline><source src="' . esc_url( $product_video_url ) . '"><p>Your browser does not support HTML5</p></video><span href="' . esc_url( $product_video_url ) . '?enablejsapi=1&wmode=opaque" class="nickx-popup nfancybox-media" data-nfancybox="product-gallery"></span></div>';
+				return '<div class="tc_video_slide nswiper-slide"><video '. ( $poster ?? '' ) .' width="100%" height="100%" preload="'.esc_attr( $nickx_preload ).'" class="product_video_iframe fitvidsignore" video-type="html5" ' . ( ( get_option( 'nickx_controls' ) == 'yes' ) ? 'controls' : '' ) . ' ' . ( ( get_option( 'nickx_vid_autoplay' ) == 'yes' && get_option( 'nickx_place_of_the_video' ) == 'yes' ) ? 'autoplay muted' : '' ) . ' playsinline webkit-playsinline><source src="' . esc_url( $product_video_url ) . '"><p>Your browser does not support HTML5</p></video><span href="' . esc_url( $product_video_url ) . '?enablejsapi=1&wmode=opaque" class="nickx-popup nfancybox-media" data-nfancybox="product-gallery"></span></div>';
 			} elseif ( $product_video_type == 'nickx_video_url_iframe' && $extend->is_nickx_act_lic() ) {
-				return '<div class="tc_video_slide nswiper-slide"><iframe style="display:none;" loading="lazy" width="100%" height="450px" class="product_video_iframe fitvidsignore" video-type="iframe" src="' . esc_url( $product_video_url ) . '" frameborder="0" allow="autoplay; fullscreen" allowfullscreen=""></iframe></div>';
+				return '<div class="tc_video_slide nswiper-slide"><iframe loading="lazy" width="100%" height="100%" class="product_video_iframe fitvidsignore" video-type="iframe" src="' . esc_url( $product_video_url ) . '" frameborder="0" allow="autoplay; fullscreen" allowfullscreen=""></iframe></div>';
 			} else {
-				return '<div class="tc_video_slide nswiper-slide"><iframe style="display:none;" data-skip-lazy="true" width="100%" height="100%" class="product_video_iframe fitvidsignore" video-type="youtube" data_src="' . esc_url( $product_video_url ) . '" src="" frameborder="0" allow="autoplay; accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>';
+				return '<div class="tc_video_slide nswiper-slide"><iframe data-skip-lazy="true" width="100%" height="100%" class="product_video_iframe fitvidsignore" video-type="youtube" data_src="' . esc_url( $product_video_url ) . '" src="" frameborder="0" allow="autoplay; accelerometer; encrypted-media; gyroscope; picture-in-picture" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe></div>';
 			}
 		}
 		public function get_css_classes(){
@@ -284,7 +310,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 			return implode( ' ', $css_classes );
 		}
 		public function nickx_show_product_image($call_type = 'action') {
-			global $post, $product, $woocommerce;
+			global $post, $product;
 			if ( $call_type != 'action' || ( !empty( $product ) && !$product->is_type( 'gift-card' ) ) ) {
 				$product_id = $this->nickx_get_product_id( get_the_ID() );
 				$show_thumb = 0;
@@ -319,10 +345,10 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 						}
 						else{
 							$show_thumb++;
-							$htmlvideo .= $this->nickx_get_nickx_video_html($product_video_urls,$extend,'nickx_video_url_youtube');
+							$htmlvideo .= $this->nickx_get_nickx_video_html( $product_video_urls, $extend, 1, 'nickx_video_url_youtube' );
 						}
 					}
-					$product_image = get_the_post_thumbnail( $product_id, 'woocommerce_single', array( 'data-skip-lazy' => 'true', 'data-zoom-image' => $imgfull_src ) );
+					$product_image = get_the_post_thumbnail( $product_id, 'woocommerce_single', array( 'data-skip-lazy' => 'true', 'data-zoom-image' => $imgfull_src, 'fetchpriority' => 'high', 'decoding' => 'async' ) );
 					$html = '';
 					if( !empty($htmlvideo) && get_option( 'nickx_show_only_video' ) == 'yes' && $extend->is_nickx_act_lic() ){
 						$html .= $htmlvideo;
@@ -331,7 +357,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 						$html .= ( ( get_option( 'nickx_place_of_the_video' ) == 'yes' && $extend->is_nickx_act_lic() ) ? $htmlvideo : '' );
 						if( !empty ( $product_image ) ){
 							$show_thumb++;
-							$html .= '<div class="nswiper-slide zoom woocommerce-product-gallery__image">'.$product_image.'<span title="'.get_the_title( $product_featured_image_id ).'" href="'.$imgfull_src.'" class="nickx-popup" data-nfancybox="product-gallery"></span></div>';
+							$html .= '<div class="nswiper-slide zoom woocommerce-product-gallery__image">'.$product_image.'<span title="'.esc_attr( get_the_title( $product_featured_image_id ) ).'" href="'.esc_url( $imgfull_src ).'" class="nickx-popup" data-nfancybox="product-gallery"></span></div>';
 						}
 						$html .= ( ( get_option( 'nickx_place_of_the_video' ) == 'second' && $extend->is_nickx_act_lic() ) ? $htmlvideo : '' );
 						foreach ( $attachment_ids as $attachment_id ) {
@@ -340,9 +366,9 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 							}
 							$show_thumb++;
 							$imgfull_src = wp_get_attachment_image_url( $attachment_id, 'full' );
-							$html       .= '<div class="nswiper-slide zoom">' . wp_get_attachment_image( $attachment_id, 'woocommerce_single', 0, array( 'data-skip-lazy' => 'true', 'data-zoom-image' => $imgfull_src ) ) . '<span title="'.get_the_title($attachment_id).'" href="' . esc_url( $imgfull_src ) . '" class="nickx-popup" data-nfancybox="product-gallery"></span></div>';
+							$html       .= '<div class="nswiper-slide zoom">' . wp_get_attachment_image( $attachment_id, 'woocommerce_single', 0, array( 'data-skip-lazy' => 'true', 'data-zoom-image' => $imgfull_src ) ) . '<span title="'.esc_attr( get_the_title($attachment_id) ).'" href="' . esc_url( $imgfull_src ) . '" class="nickx-popup" data-nfancybox="product-gallery"></span></div>';
 						}
-						$html .= ( ( get_option( 'nickx_place_of_the_video' ) == 'no' && get_option( 'nickx_place_of_the_video' ) != 'yes' &&  get_option( 'nickx_place_of_the_video' ) != 'second' || ! $extend->is_nickx_act_lic() ) ? $htmlvideo : '' );
+						$html .= ( ( get_option( 'nickx_place_of_the_video' ) == 'no' || ! $extend->is_nickx_act_lic() ) ? $htmlvideo : '' );
 					}
 					echo apply_filters( 'woocommerce_single_product_image_html', $html, $product_id );
 				} else {
@@ -377,7 +403,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 					foreach ($product_video_urls as $key => $product_video_url) {
 						if( !empty( $product_video_url ) ) {
 							$product_video_thumb_id   = isset($product_video_thumb_ids[$key]) ? $product_video_thumb_ids[$key] : '';
-							$custom_thumbnail        = isset($custom_thumbnails[$key]) && !empty($product_video_thumb_id) ? 'custom_thumbnail="'.$custom_thumbnails[$key].'"' : '';
+							$custom_thumbnail        = isset($custom_thumbnails[$key]) && !empty($product_video_thumb_id) ? 'custom_thumbnail="' . esc_attr($custom_thumbnails[$key]) . '"' : '';
 							$product_video_thumb_url = $wc_placeholder_img;
 							$global_thumb = '';
 							if ( $product_video_thumb_id ) {
@@ -418,16 +444,14 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 			}
 		}
 		public function nickx_show_product_thumbnails($product_id) {
-			global $post, $product, $woocommerce;
+			global $post, $product;
 			if (empty($product->get_type()) || ( !empty( $product ) && !$product->is_type( 'gift-card' ) ) ) {
 				$product_video_urls = get_post_meta( $product_id, '_nickx_video_text_url', true );
 				$extend         = new NICKX_LIC_CLASS();
 				$attachment_ids = $product->get_gallery_image_ids();
 				if ( has_post_thumbnail() ) {
 					$thumbanil_id   = get_post_thumbnail_id();
-					// Remove featured image from attachment_ids if it exists to avoid duplicates
 					$attachment_ids = array_diff( $attachment_ids, array( $thumbanil_id ) );
-					// Add featured image at the beginning to ensure it's always first
 					$attachment_ids = array_merge( array( $thumbanil_id ), $attachment_ids );
 				}
 				$thumbnail_size    = apply_filters( 'woocommerce_gallery_thumbnail_size', 'woocommerce_gallery_thumbnail' );
@@ -449,7 +473,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 								$this->nickx_get_video_thumbanil_html( $product_id, $thumbnail_size );
 							}
 						}
-						if ( get_option( 'nickx_place_of_the_video' ) == 'no' && get_option( 'nickx_place_of_the_video' ) != 'yes' && get_option( 'nickx_place_of_the_video' ) != 'second' || ! $extend->is_nickx_act_lic() ) {
+						if ( get_option( 'nickx_place_of_the_video' ) == 'no' || ! $extend->is_nickx_act_lic() ) {
 							$this->nickx_get_video_thumbanil_html( $product_id, $thumbnail_size );
 						}
 					}
@@ -458,6 +482,134 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 			} else {
 				woocommerce_show_product_thumbnails();
 			}
+		}
+
+		public function load_variation_media( $variation_data, $product, $variation ) {
+			$is_act_lic      = $this->extend->is_nickx_act_lic();
+			$variation_id    = $variation->get_id();
+			$product_image   = $product->get_image_id();
+			$variation_image = $variation->get_image_id();
+			$video_url       = '';
+			$has_video       = false;
+			
+			if ( $is_act_lic ) {
+				$video_url  = get_post_meta( $variation_id, '_nickx_variation_video_url', true );
+				if ( ! empty( $video_url ) ) {
+					$has_video = true;
+				}
+			}
+			$wc_gallery_ids = array();
+			if ( is_callable( array( $variation, 'get_gallery_image_ids' ) ) ) {
+				$wc_gallery_ids = $variation->get_gallery_image_ids();
+			}
+			if ( empty( $wc_gallery_ids ) ) {
+				$wc_gallery_ids = get_post_meta( $variation_id, '_product_image_gallery', true );
+				$wc_gallery_ids = !empty( $wc_gallery_ids ) ? wp_parse_id_list( $wc_gallery_ids ) : [];
+			}
+
+			// If variation has no video and no image uploaded, default product gallery should show
+			if ( ! $has_video && $product_image == $variation_image && empty( $wc_gallery_ids ) ) {
+				$variation_data['nickx_has_no_media'] = true;
+				return $variation_data;
+			}
+
+			if ( $has_video ) {
+				$variation_data['nickx_variation_video_url']       = $video_url;
+				$variation_data['nickx_variation_video_thumb_url'] = wc_placeholder_img_src();
+				if ( strpos( $video_url, 'youtube' ) !== false || strpos( $video_url, 'youtu' ) !== false ) {
+					$variation_data['nickx_variation_video_type']  = 'youtube';
+					$variation_data['nickx_variation_video_embed'] = $this->nickx_get_embed_yt_url( $video_url );
+				} elseif ( strpos( $video_url, 'vimeo' ) !== false ) {
+					$variation_data['nickx_variation_video_type']  = 'vimeo';
+					$variation_data['nickx_variation_video_embed'] = $this->nickx_get_embed_vimeo_url( $video_url );
+				} else {
+					$variation_data['nickx_variation_video_type']  = 'html5';
+					$variation_data['nickx_variation_video_embed'] = $video_url;
+				}
+			} elseif ( $is_act_lic && ( $product_image != $variation_image || ! empty( $wc_gallery_ids ) ) ) {
+				$parent_id = $product->get_id();
+				static $parent_video_cache = array();
+				if ( ! isset( $parent_video_cache[ $parent_id ] ) ) {
+					$parent_video_urls      = get_post_meta( $parent_id, '_nickx_video_text_url', true );
+					if ( ! empty( $parent_video_urls ) ) {
+						$parent_video_types     = get_post_meta( $parent_id, '_nickx_product_video_type', true );
+						$parent_video_thumb_ids = get_post_meta( $parent_id, '_nickx_product_video_thumb_ids', true );
+	
+						$parent_url      = is_array( $parent_video_urls ) && !empty( $parent_video_urls[0] ) ? $parent_video_urls[0] : $parent_video_urls;
+						$parent_type     = is_array( $parent_video_types ) && !empty( $parent_video_types[0] ) ? $parent_video_types[0] : $parent_video_types;
+						$parent_thumb_id = is_array( $parent_video_thumb_ids ) && !empty( $parent_video_thumb_ids[0] ) ? $parent_video_thumb_ids[0] : $parent_video_thumb_ids;
+	
+						if ( ! empty( $parent_url ) ) {
+							$parent_thumb_url = '';
+							if ( ! empty( $parent_thumb_id ) ) {
+								$thumbnail_size    = apply_filters( 'woocommerce_gallery_thumbnail_size', 'woocommerce_gallery_thumbnail' );
+								$parent_thumb_url = wp_get_attachment_image_url( $parent_thumb_id, $thumbnail_size );
+							}
+	
+							$video_type  = 'html5';
+							$video_embed = $parent_url;
+	
+							if ( strpos( $parent_url, 'youtube' ) !== false || strpos( $parent_url, 'youtu' ) !== false || $parent_type === 'nickx_video_url_youtube' ) {
+								$video_type  = 'youtube';
+								$video_embed = $this->nickx_get_embed_yt_url( $parent_url );
+							} elseif ( strpos( $parent_url, 'vimeo' ) !== false || $parent_type === 'nickx_video_url_vimeo' ) {
+								$video_type  = 'vimeo';
+								$video_embed = $this->nickx_get_embed_vimeo_url( $parent_url );
+							} elseif ( $parent_type === 'nickx_video_url_iframe' ) {
+								$video_type  = 'iframe';
+								$video_embed = $parent_url;
+							}
+							$parent_video_cache[ $parent_id ] = array(
+								'url'       => $parent_url,
+								'thumb_url' => ! empty( $parent_thumb_url ) ? $parent_thumb_url : wc_placeholder_img_src(),
+								'type'      => $video_type,
+								'embed'     => $video_embed,
+							);
+						}
+					}
+				}
+
+				if ( ! empty( $parent_video_cache[ $parent_id ] ) ) {
+					$cached = $parent_video_cache[ $parent_id ];
+					$variation_data['nickx_variation_video_url']       = $cached['url'];
+					$variation_data['nickx_variation_video_thumb_url'] = $cached['thumb_url'];
+					$variation_data['nickx_variation_video_type']      = $cached['type'];
+					$variation_data['nickx_variation_video_embed']     = $cached['embed'];
+					$variation_data['nickx_is_parent_video']           = true;
+				}
+			}
+			if ( ! empty( $wc_gallery_ids ) ) {
+				$thumbnail_size = apply_filters( 'woocommerce_gallery_thumbnail_size', 'woocommerce_gallery_thumbnail' );
+				$gallery_array  = array();
+				static $image_cache = array();
+				foreach ( $wc_gallery_ids as $img_id ) {
+					if ( ! empty( $img_id ) ) {
+						if ( ! isset( $image_cache[ $img_id ] ) ) {
+							$full_url = wp_get_attachment_url( $img_id );
+							if ( $full_url ) {
+								$single_src = wp_get_attachment_image_url( $img_id, 'woocommerce_single' );
+								$thumb_src  = wp_get_attachment_image_url( $img_id, $thumbnail_size );
+								$srcset     = wp_get_attachment_image_srcset( $img_id, 'woocommerce_single' );
+								$sizes      = wp_get_attachment_image_sizes( $img_id, 'woocommerce_single' );
+								$image_cache[ $img_id ] = array(
+									'id'     => $img_id,
+									'full'   => $full_url,
+									'single' => $single_src ?: $full_url,
+									'thumb'  => $thumb_src ?: $full_url,
+									'srcset' => $srcset ?: '',
+									'sizes'  => $sizes ?: '',
+									'title'  => get_the_title( $img_id ),
+								);
+							}
+						}
+						if ( $image_cache[ $img_id ] ) {
+							$gallery_array[] = $image_cache[ $img_id ];
+						}
+					}
+				}
+				$variation_data['nickx_variation_gallery'] = $gallery_array;
+			}
+			return $variation_data;
 		}
 	}
 }

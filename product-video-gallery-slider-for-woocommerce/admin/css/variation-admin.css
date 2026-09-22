@@ -1,0 +1,123 @@
+/* Container for image thumbnails */
+.variation-media-preview {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+    border: 1px dashed #ccc;
+    padding: 10px;
+    background: #f9f9f9;
+}
+
+/* Individual thumbnail wrapper */
+.media-thumb {
+    position: relative;
+    width: 60px;
+    height: 60px;
+    overflow: visible;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: #fff;
+    cursor: move;
+}
+
+/* Thumbnail image */
+.media-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+/* Remove button for images & videos */
+.remove-media,
+.remove-video {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    background: #e53935;
+    color: #fff;
+    border-radius: 50%;
+    width: 18px;
+    height: 18px;
+    font-size: 12px;
+    line-height: 18px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    z-index: 10;
+}
+
+/* Video preview container */
+.video-preview {
+    position: relative;
+    max-width: 200px;
+    margin: 10px 0;
+}
+
+/* Video element styling */
+.video-preview video {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 4px;
+}
+
+/* Placeholder for empty image gallery */
+.variation-media-preview:empty::before {
+    content: "No images selected";
+    color: #aaa;
+    font-size: 14px;
+    padding: 20px 0;
+    width: 100%;
+    text-align: center;
+    display: block;
+}
+
+/* Placeholder for empty video preview */
+.form-field .video-preview:empty::before {
+    content: "No video selected";
+    border: 1px dashed #ccc;
+    padding: 10px;
+    background: #f9f9f9;
+    color: #aaa;
+    font-size: 14px;
+    padding: 20px 0;
+    text-align: center;
+    display: block;
+}
+
+button.button.upload_gallery_button,
+button.button.upload_video_button {
+    margin-left: 10px;
+}
+
+.nickx-variation-video-group {
+    margin-bottom: 12px;
+}
+
+.nickx-variation-gallery-group {
+    margin-top: 8px;
+}
+
+/* Locked Premium state styling for variations */
+.nickx-variation-premium-notice {
+    background: #fff8e5;
+    border-left: 4px solid #ffb900;
+    padding: 8px 12px;
+    margin: 10px 0;
+    font-size: 13px;
+    color: #444;
+}
+
+.nickx-variation-premium-notice a {
+    font-weight: 600;
+    color: #007cba;
+    text-decoration: underline;
+}
+
+.nickx-variation-locked input[type="text"],
+.nickx-variation-locked button {
+    opacity: 0.6;
+    pointer-events: none;
+}
