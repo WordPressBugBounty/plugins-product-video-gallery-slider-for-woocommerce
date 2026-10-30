@@ -296,6 +296,9 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_RENDERING' ) ) {
 		}
 		public function get_css_classes(){
 			$css_classes = array( 'images', 'nickx_product_images_with_video' );
+			if ( get_option( 'nickx_video_size', 'auto' ) === 'auto' ) {
+				$css_classes[] = 'video-size-auto';
+			}
 			if( get_option( 'nickx_show_lightbox' ) == 'yes' ){
 				$css_classes[] = 'show_lightbox';
 			}

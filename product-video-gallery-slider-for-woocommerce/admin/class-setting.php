@@ -100,6 +100,15 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 										</td>
 									</tr>
 									<tr valign="top">
+										<th scope="row" class="titledesc"><label for="nickx_video_size">Video Size</label></th>
+										<td class="forminp forminp-select">
+											<select name="nickx_video_size" id="nickx_video_size">
+												<option value="gallery" ' . selected( 'gallery', get_option( 'nickx_video_size', 'auto' ), false ) . '>Same as gallery</option>
+												<option value="auto" ' . selected( 'auto', get_option( 'nickx_video_size', 'auto' ), false ) . '>Auto</option>
+											</select>
+										</td>
+									</tr>
+									<tr valign="top">
 										<th scope="row" class="titledesc"><label for="nickx_slider_responsive">Slider Responsive</label></th>
 										<td class="forminp forminp-checkbox">
 											<input name="nickx_slider_responsive" id="nickx_slider_responsive" type="checkbox" value="yes" ' . checked( 'yes', get_option( 'nickx_slider_responsive' ), false ) . '>
@@ -452,6 +461,7 @@ if ( ! class_exists( 'WC_PRODUCT_VIDEO_GALLERY_SETTING' ) ) {
 		}
 		public function update_wc_product_video_gallery_options( $value = '' ) {
 			register_setting( 'wc_product_video_gallery_options', 'nickx_slider_layout' );
+			register_setting( 'wc_product_video_gallery_options', 'nickx_video_size' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_slider_responsive' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_sliderautoplay' );
 			register_setting( 'wc_product_video_gallery_options', 'nickx_sliderfade' );

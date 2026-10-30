@@ -2,11 +2,11 @@
 Contributors: nikhilgadhiya
 Donate link: https://www.paypal.com/paypalme/NikhilGadhiya
 Tags: product-video,woocommerce-product,video-slider,youtube,woocommerce
-Requires at least: 5.2.4
-Tested up to: 7.1.2
+Requires at least: 7.0
 Requires PHP: 7.4
-Stable tag: 1.5.2.3
-Date: 01/10/2026
+Tested up to: 7.1.4
+Stable tag: 1.5.2.4
+Date: 31/10/2026
 License: GPLv3 or later License
 URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -84,6 +84,12 @@ For adding a video to your product : open edit product page and insert your prod
 
 
 == Changelog ==
+
+= 1.5.2.4 =
+* Fixed the issue where a variation with only one image was showing in the separate variation gallery instead of the main gallery.
+* Added a video size setting.
+* Bug fixes.
+* Tested latest version compatibility.
 
 = 1.5.2.3 =
 * Bug fixes.

@@ -107,13 +107,13 @@
   object-fit: cover;
 }
 
-.nswiper-slide video,
-.nswiper-slide iframe {
+.nickx_product_images_with_video.video-size-auto .nswiper-slide video,
+.nickx_product_images_with_video.video-size-auto .nswiper-slide iframe {
   border-radius: 3px;
   max-height: 676px !important;
 }
 
-.nswiper-slide iframe[data-ratio^="1.7777"] {
+.nickx_product_images_with_video.video-size-auto .nswiper-slide iframe[data-ratio^="1.7777"] {
   max-width: 380px !important;
 }
 
